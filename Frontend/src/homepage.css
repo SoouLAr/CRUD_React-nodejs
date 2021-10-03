@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@700&display=swap');
+
+.header{
+    width:100%;
+    height:65px;
+    background-image: linear-gradient(to top right,rgb(96, 96, 248),rgb(26, 118, 240));
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: space-between;
+}
+
+.header__title{
+    font-size: 35px;
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.links{
+    flex: 0 0 20%;
+}
+
+.headerLinks{
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    margin: 0 10px;
+    transition: all .5s ease-in-out;
+}
+
+.headerLinks:hover{
+    color: brown;
+    font-size: 22px;
+}
+
+.bodyMix{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 1000px;
+    background-color: rgb(233, 222, 207);
+}
+
+
+@media only screen and (max-width: 640px){
+        .image__header{
+            transform: translate(-200%,-50%) !important;
+        }
+}
+
+.image__header{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-family: "Gemunu Libre";
+    transition: all .4s ease-in;
+    
+}
+
+.item_header{
+    width: 100%;
+    height: 150px;
+    opacity: 0;
+    top:100%;
+    text-align: center;
+    padding-top: 10%;
+}
+
+.image__header:hover{
+    color:blue;
+    
+}
+
+.items{
+    flex: 0 0 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.item{
+    max-width: 300px;
+    height: 300px;
+    background-color: rgba(48, 34, 102, 0.986);
+    margin: 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    position: relative;
+    flex: 0 0 30%;
+}
+
+.item:hover{
+    cursor: pointer;
+}
+
+
+.item__price{
+    text-align: center;
+    font-size: 22px;
+}
+
+.item:hover>.item_header{
+    cursor: pointer;
+    opacity: 1;
+    transform: translate(-50%,-100%);
+    background-color: rgba(70, 57, 57, 0.623);
+}
+
+.noItems{
+    padding-top: 50px;
+    text-align: center;
+}
+
+.noItems>*{
+    margin-top: 20px;
+}
+
+.category__header{
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: "Gemunu Libre";
+    color: rgb(48, 3, 3);
+    font-size: 35px;
+}
+
+.items__header{
+    text-align: center;
+    font-family: "Gemunu Libre";
+    margin:0 30px;
+}
+
+.modal__open{
+    width: 85px;
+    height: 35px;
+    margin-right: 35px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    background-color: aliceblue;
+    transition: all .3s ease-in;
+}
+.modal__open:active{
+    transform: translateY(5px);
+}

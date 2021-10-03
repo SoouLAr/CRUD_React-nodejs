@@ -1,0 +1,51 @@
+.categories{
+    flex:0 0 30%;
+    padding-top: 20px;
+}
+
+.category__item{
+    width: 100vw;
+    padding-top: 20px;
+    width: 100vw;
+    height: 280px;
+    display: flex;
+    cursor: pointer;
+}
+
+.nested{
+    display: inline-block;
+    height: 100%;
+    width: var(--vw);
+    background-color: red;
+    border:1px solid black;
+    background-color: rgba(94, 0, 0, 0.918);
+    position: relative;
+    transition: all .5s ease-in;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.imageCategory{
+    transition: all .5s ease-in-out;
+}
+.imageCategory:hover{
+    transform: scale(1.1);
+}
+
+.slick-prev{
+    background-color: transparent;
+    z-index: 5;
+    left:20px;
+
+}
+.slick-prev:active{
+    transform: translateY(-5px);
+}
+.slick-next{
+    background-color: transparent;
+    z-index: 5;
+    right:35px;
+}
+.slick-next:active{
+    transform: translateY(-5px);
+}
