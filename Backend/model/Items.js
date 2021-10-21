@@ -2,6 +2,7 @@ const Company = require('./Categorie');
 const mongoose = require('mongoose'), Schema = mongoose.Schema;
 
 const Item = mongoose.Schema({
+    
     name:{
         type:String,
         required : [true,"Item must have a name"]
