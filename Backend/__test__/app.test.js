@@ -12,6 +12,8 @@ describe("Item API testing", () => {
     expect(allItem).not.toBe([]);
   });
 
+
+
   it("Add an item and check if the database is updated", async () => {
     let oldItems = await axios
       .get("http://localhost:5000/item")
@@ -41,8 +43,11 @@ describe("Item API testing", () => {
       .catch((err) => console.log(err));
     expect(newItems).not.toBe(oldItems);
   });
+
+
+
   it("Delete and item and check if that item is deleted and find element by that ID", async () => {
-    const idForDelete = "6171caf6805d96772c042d0c"
+    const idForDelete = ""
     let item = await axios
       .get("http://localhost:5000/item/getItem/"+idForDelete)
       .then((res) => {
@@ -60,8 +65,10 @@ describe("Item API testing", () => {
       .catch((err) => console.log(err));
     expect(newItems).not.toContain(item);
   });
+
+
   it("Update an item and ",async()=>{
-      const idForUpdate='6171c923db61c12ddd1ad445'
+      const idForUpdate=''
     let item = await axios
     .get("http://localhost:5000/item/getItem/"+idForUpdate)
     .then((res) => {
@@ -90,4 +97,3 @@ describe("Item API testing", () => {
     expect(item).not.toEqual(newUpdatedItem)
   })
 });
-//koment
