@@ -16,6 +16,7 @@ exports.getAll=async (req,res)=>{
 exports.addItem=async (req,res)=>{
     try{
             const item = await Item.create({
+                _id : ObjectId(req.body.id),
                 name: req.body.name,
                 unit: req.body.unit,
                 price: req.body.price,
