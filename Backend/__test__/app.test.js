@@ -1,6 +1,8 @@
 import axios from "axios";
 const mongoose = require("mongoose");
 
+const id = "6171cc801b71f46426c0b667";
+
 describe("Item API testing", () => {
   it("Get all items and check if the array is completed", async () => {
     let allItem = await axios
@@ -11,8 +13,6 @@ describe("Item API testing", () => {
       .catch((err) => console.log(err));
     expect(allItem).not.toBe([]);
   });
-
-
 
   it("Add an item and check if the database is updated", async () => {
     let oldItems = await axios
@@ -44,56 +44,86 @@ describe("Item API testing", () => {
     expect(newItems).not.toBe(oldItems);
   });
 
+  // it("Update an item and get that item API ", async () => {
+  //   let item = await axios
+  //     .get("http://localhost:5000/item/getItem/" + id)
+  //     .then((res) => {
+  //       return res.data;
+  //     })
+  //     .catch((err) => console.log(err));
+  //   const itemUpdated = {
+  //     name: "TestUpdated",
+  //     unit: 101,
+  //     price: 701,
+  //     image: "RandomLink",
+  //     category: "61546a9f560152d1b96b4687",
+  //   };
+  //   axios.patch("http://localhost:5000/item/updateItem/" + id, {
+  //     name: itemUpdated.name,
+  //     unit: itemUpdated.unit,
+  //     price: itemUpdated.price,
+  //     image: itemUpdated.image,
+  //     category: itemUpdated.category,
+  //   });
+  //   let newUpdatedItem = await axios
+  //     .get("http://localhost:5000/item/getItem/" + id)
+  //     .then((res) => {
+  //       return res.data;
+  //     });
+  //   expect(item).not.toEqual(newUpdatedItem);
+  // });
 
+  // it("Delete and item and check if that item is deleted and find element by that ID", async () => {
+  //   let item = await axios
+  //     .get("http://localhost:5000/item/getItem/"+id)
+  //     .then((res) => {
+  //       return res.data;
+  //     })
+  //     .catch((err) => console.log(err));
+  //   axios.delete(
+  //     "http://localhost:5000/item/deleteItem/"+id
+  //   );
+  //   let newItems = await axios
+  //     .get("http://localhost:5000/item")
+  //     .then((res) => {
+  //       return res.data;
+  //     })
+  //     .catch((err) => console.log(err));
+  //   expect(newItems).not.toContain(item);
+  // });
+})
 
-  it("Delete and item and check if that item is deleted and find element by that ID", async () => {
-    const idForDelete = ""
-    let item = await axios
-      .get("http://localhost:5000/item/getItem/"+idForDelete)
+describe("Category automatic testing API-s", () => {
+  it("Get all categoryies",async ()=>{
+      let allCategories = await axios
+        .get("http://localhost:5000/category")
+        .then((res) => {
+          return res.data;
+        })
+        .catch((err) => console.log(err));
+      expect(allCategories).not.toBe([]);
+    });
+  it("Add an Category and check if the database is updated", async () => {
+    let oldCategories = await axios
+      .get("http://localhost:5000/category")
       .then((res) => {
         return res.data;
       })
       .catch((err) => console.log(err));
-    axios.delete(
-      "http://localhost:5000/item/deleteItem/"+idForDelete
-    );
-    let newItems = await axios
-      .get("http://localhost:5000/item")
+    const category = {
+      names: ["NewCategory"],
+      images: "RandomLink",
+    };
+    axios.post("http://localhost:5000/category/addCategory", {
+      names: category.names,
+      images: category.images,
+    });
+    const newCategories = await axios
+      .get("http://localhost:5000/category")
       .then((res) => {
         return res.data;
       })
       .catch((err) => console.log(err));
-    expect(newItems).not.toContain(item);
+    expect(newCategories).not.toBe(oldCategories);
   });
-
-
-  it("Update an item and ",async()=>{
-      const idForUpdate=''
-    let item = await axios
-    .get("http://localhost:5000/item/getItem/"+idForUpdate)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => console.log(err));
-    const itemUpdated = {
-        name: "TestUpdated",
-        unit: 101,
-        price: 701,
-        image: "RandomLink",
-        category: "61546a9f560152d1b96b4687",
-      };
-    axios.patch("http://localhost:5000/item/updateItem/"+idForUpdate,{
-        name: itemUpdated.name,
-        unit: itemUpdated.unit,
-        price: itemUpdated.price,
-        image: itemUpdated.image,
-        category: itemUpdated.category,
-    })
-    let newUpdatedItem = await axios
-    .get("http://localhost:5000/item/getItem/"+idForUpdate)
-    .then((res) => {
-      return res.data;
-    })
-    expect(item).not.toEqual(newUpdatedItem)
-  })
 });
