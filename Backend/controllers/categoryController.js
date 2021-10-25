@@ -43,7 +43,7 @@ exports.deleteCategory = async (req,res)=>{
         } else {
          if (Categorie) {
              await Categorie.findByIdAndDelete(req.params.categoryID)
-             res.send(Categorie.names[0]+" was succesfuly deleted")
+             res.send("was succesfuly deleted")
             } else {
                 res.send(req.params.categoryID+"don't exict")
             }

@@ -43,7 +43,10 @@ exports.deleteItem=async (req,res)=>{
                 res.send("Please make sure the Item ID is valid")
             } else {
                 await Item.findByIdAndDelete(req.params.itemId)
-            res.send("Item deleted succesfuly")
+                res.send({
+                    status:201,
+                    message:"Item deleted succesfully"
+                })
         }} 
     catch (error) {
         res.send(error)
