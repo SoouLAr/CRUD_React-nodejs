@@ -20,10 +20,11 @@ function HomePage() {
 
   useEffect(() => {
     setIsloading(true);
-    axios.get("http://127.0.0.1:3000/category").then((res) => {
+    axios.get("http://127.0.0.1:5000/category").then((res) => {
       setCategories(res.data);
     });
-    axios.get("http://127.0.0.1:3000/item").then((res) => {
+    axios.get("http://127.0.0.1:5000/item").then((res) => {
+      console.log(res.data);
       setItems(res.data);
       setIsloading(false);
       res.data.length === 0 ? setIsItems(false) : setIsItems(true);
@@ -48,7 +49,7 @@ function HomePage() {
   const getItems = (id) => {
     setIsItemLoading(true);
     axios
-      .get("http://127.0.1:3000/item/getItemByCategory/" + id)
+      .get("http://127.0.1:5000/item/getItemByCategory/" + id)
       .then((res) => {
         setItems(res.data);
         setIsItemLoading(false);
@@ -63,7 +64,7 @@ function HomePage() {
   const createItem = (name, price, unit, image, category) => {
     setIsOpen(true);
     axios
-      .post("http://127.0.0.1:3000/item/addItem", {
+      .post("http://127.0.0.1:5000/item/addItem", {
         name: name,
         price: price,
         unit: unit,
