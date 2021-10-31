@@ -26,7 +26,6 @@ app.use('/category',categorieRouters);
 app.use('/item',itemRouters)
 
 
-
 app.listen(5000,()=>console.log('server started!'));
 
 exports.module=app;

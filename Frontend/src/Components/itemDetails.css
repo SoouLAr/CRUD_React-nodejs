@@ -1,0 +1,26 @@
+.item-details{
+    display: flex;
+    margin-top: 35px;
+    padding: 0 40px;
+}
+.image{
+    width: 500px;
+    height: 500px;
+}
+.details{
+    padding: 100px 0 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.details-header{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex: 0 0 50%;
+}
+.buttons-actions{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
