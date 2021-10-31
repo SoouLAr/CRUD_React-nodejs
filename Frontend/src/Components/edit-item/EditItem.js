@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { toast } from "react-hot-toast";
-import "./EditItem.css";
+import "../edit-item/EditItem.css"
 
 export const EditItem = () => {
   const { id } = useParams();

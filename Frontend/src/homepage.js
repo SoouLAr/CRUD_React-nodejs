@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import Loader from "./Components/Loader";
+import Loader from "./Components/loader/Loader";
 import ModalItem from "./Components/modalCreateItem";
 import toast, { Toaster } from "react-hot-toast";
-import { CategoryComponent } from "../src/Components/categoryComponent";
+import { CategoryComponent } from "./Components/category/categoryComponent";
 import { ItemComponent } from "./Components/itemCategory";
 import { Route, Switch } from "react-router";
 import { Item } from "./Components/Item";
@@ -12,7 +12,7 @@ import { ItemPreview } from "./Components/ItemPreview";
 import { Link } from "react-router-dom";
 import { ItemsByCategory } from "./Components/itemsbyCategory";
 import "./homepage.css";
-import { EditItem } from "./Components/EditItem";
+import { EditItem } from "./Components/edit-item/EditItem"
 
 function HomePage() {
   const [categories, setCategories] = useState([]);

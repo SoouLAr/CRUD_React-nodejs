@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
-import './carousel.css'
+import '../carousel/carousel.css'
 
 export const CategoryComponent = (props)=>{
     return(

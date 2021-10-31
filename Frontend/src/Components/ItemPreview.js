@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { ItemDetails } from "./itemDetails";
+import { ItemDetails } from "./item-details/itemDetails";
 
 export const ItemPreview = ()=>{
     const {_id} = useParams();
