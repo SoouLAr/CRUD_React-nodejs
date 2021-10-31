@@ -1,14 +1,16 @@
+require('dotenv').config();
 const express = require('express')
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
 const categorieRouters = require('./routes/categorieRoutes');
 const itemRouters = require('./routes/itemRouters');
 
-
+const uri = process.env.URI
 
 mongoose
-  .connect('mongodb+srv://tao3:1234@cluster0.48kz0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+  .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -25,7 +27,7 @@ app.use(express.json())
 app.use('/category',categorieRouters);
 app.use('/item',itemRouters)
 
-
-app.listen(5000,()=>console.log('server started!'));
+const port = process.env.PORT;
+app.listen(port,()=>console.log('server started!'));
 
 exports.module=app;
