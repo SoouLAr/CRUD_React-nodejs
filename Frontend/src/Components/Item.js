@@ -10,6 +10,7 @@ export const Item = ({isItemLoading,Loader,setIsloading,ItemComponent})=>{
   }
   useEffect(()=>{
     fetchItems()
+    // eslint-disable-next-line
   },[])
    if (isItemLoading) {
        return (

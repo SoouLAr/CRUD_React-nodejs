@@ -12,6 +12,7 @@ export const ItemsByCategory = ()=>{
     }
     useEffect(()=>{
         fetchItems()
+        // eslint-disable-next-line
     },[items])
     
     return (

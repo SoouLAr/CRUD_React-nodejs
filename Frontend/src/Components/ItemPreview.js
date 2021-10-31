@@ -16,6 +16,7 @@ export const ItemPreview = ()=>{
     }
     useEffect(()=>{
         fetchItem()
+        // eslint-disable-next-line
     },[_id])
     return(
         <ItemDetails item={item} />

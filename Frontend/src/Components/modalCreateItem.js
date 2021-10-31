@@ -16,7 +16,7 @@ function ModalItem({
     price: undefined,
     unit: undefined,
     image: "",
-    category: categories.length > 0 ? categories[0]._id : "",
+    category: categories.length > 0 ? categories[0]._id : ""
   };
 
   const [state, setState] = useState(initialState);
@@ -52,7 +52,6 @@ function ModalItem({
   };
 
   return (
-
     <Modal
       isOpen={modalIsOpen}
       onRequestClose={closeModal}

@@ -1,7 +1,9 @@
 import axios from 'axios'
 import {React} from 'react'
+import {Link} from 'react-router-dom'
 import { useHistory } from 'react-router'
 import './itemDetails.css'
+
 
 export const ItemDetails=({item})=>{
     const history = useHistory()
@@ -24,7 +26,7 @@ export const ItemDetails=({item})=>{
                         <h1>{item.unit +" left"}</h1>
                     </div>
                     <div className="buttons-actions">
-                        <button type="button" class="btn btn-primary">Edit</button>
+                        <Link to={`/edit/${item._id}`} type="button" class="btn btn-primary">Edit</Link>
                         <button type="button" class="btn btn-danger" onClick={handleDelete}>Delete</button>
                     </div>
             </div>

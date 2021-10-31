@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import "./homepage.css";
-import { CategoryComponent } from "../src/Components/categoryComponent";
-import { ItemComponent } from "./Components/itemCategory";
 import Loader from "./Components/Loader";
 import ModalItem from "./Components/modalCreateItem";
 import toast, { Toaster } from "react-hot-toast";
+import { CategoryComponent } from "../src/Components/categoryComponent";
+import { ItemComponent } from "./Components/itemCategory";
 import { Route, Switch } from "react-router";
 import { Item } from "./Components/Item";
 import { ItemPreview } from "./Components/ItemPreview";
 import { Link } from "react-router-dom";
 import { ItemsByCategory } from "./Components/itemsbyCategory";
+import "./homepage.css";
+import { EditItem } from "./Components/EditItem";
 
 function HomePage() {
   const [categories, setCategories] = useState([]);
-  const [items, setItems] = useState([]);
   const [isLoading, setIsloading] = useState(false);
-  const [isItemLoading, setIsItemLoading] = useState(false);
   const [isSuccesCreatedItem, setIsSuccesCreatedItem] = useState(0);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({});
@@ -59,7 +58,6 @@ function HomePage() {
         toast.success("Item added success!");
       })
       .catch((e) => {
-        console.log(e.response.data);
         setErrors(e.response.data);
         toast.error("Item failed to add");
       });
@@ -106,12 +104,13 @@ function HomePage() {
             <Route exact path="/category/:id">
               <ItemsByCategory />
             </Route>
+            <Route exact path="/edit/:id">
+                <EditItem toast={toast} />
+            </Route>
             <Route exact path="/">
               <Item
                 setIsloading={setIsloading}
-                isItemLoading={isItemLoading}
                 Loader={Loader}
-                items={items}
                 ItemComponent={ItemComponent}
               />
             </Route>

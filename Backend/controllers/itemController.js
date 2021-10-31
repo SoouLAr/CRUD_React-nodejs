@@ -55,13 +55,12 @@ exports.deleteItem=async (req,res)=>{
 
 exports.updateItem=async (req,res)=>{
     if (!ObjectId.isValid(req.params.id)){
-        console.log(req.params.id)
         res.send("Please give a valid ID")
     } else{
     if (req.body.unit>0 && req.body.price>0 ){
         try {
             const repriceItem = await Item.findByIdAndUpdate(req.params.id,
-                {   name:req.body.newname,
+                {   name:req.body.name,
                     unit:req.body.unit,
                     price:req.body.price,
                     image:req.body.image,
