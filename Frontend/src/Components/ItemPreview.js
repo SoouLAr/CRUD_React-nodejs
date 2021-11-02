@@ -9,7 +9,9 @@ export const ItemPreview = ()=>{
     const fetchItem = async ()=>{
         try{
         const {data} = await axios.get(`http://localhost:5000/item/getItem/${_id}`)
-        setItem(data)}
+        setItem(data)
+        console.log(item)
+    }
         catch(error){
             console.log(error);
         }

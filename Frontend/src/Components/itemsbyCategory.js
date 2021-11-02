@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {  useParams } from "react-router";
-import {ItemComponent} from "../Components/itemCategory";
+import {ItemComponent} from "./item-wrapper/itemCategory";
 
 export const ItemsByCategory = ()=>{
     const {id} = useParams();
