@@ -2,28 +2,19 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import "./modalItem.css";
 
-
-function ModalItem({
-  modalIsOpen,
-  closeModal,
-  categories,
-  addItem,
-  errors,
-  setErrors,
-}) {
+export const ModalItem=({modalIsOpen,closeModal,categories,addItem,errors,setErrors})=>{
   const initialState = {
     name: "",
     price: undefined,
     unit: undefined,
     image: "",
-    category: categories.length > 0 ? categories[0]._id : ""
+    category: categories.length > 0 ? categories[0]._id : "",
   };
 
   const [state, setState] = useState(initialState);
 
-
   Modal.setAppElement("#root");
-  
+
   const customStyles = {
     content: {
       top: "50%",
@@ -50,7 +41,6 @@ function ModalItem({
       [e.target.name]: null,
     });
   };
-
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -152,7 +142,7 @@ function ModalItem({
             onClick={() => {
               setState(initialState);
               closeModal();
-              Object.keys(errors).forEach(e => errors[e] = null)
+              Object.keys(errors).forEach((e) => (errors[e] = null));
             }}
           >
             Cancel
@@ -162,5 +152,3 @@ function ModalItem({
     </Modal>
   );
 }
-
-export default ModalItem;

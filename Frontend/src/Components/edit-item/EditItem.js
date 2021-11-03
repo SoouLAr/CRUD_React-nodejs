@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 import { toast } from "react-hot-toast";
 import "../edit-item/EditItem.css"
 
-export const EditItem = () => {
+export const EditItem = ({categories}) => {
   const { id } = useParams();
   const history = useHistory();
   const [item, setItem] = useState({});
@@ -69,6 +69,21 @@ export const EditItem = () => {
             class="form-control"
             onChange={handleChange}
           />
+        </div>
+        <div className="select_input">
+          <p className="input_label">Category</p>
+          <select
+            name="category"
+            className="category__select"
+            value={item.category}
+            onChange={handleChange}
+          >
+            {categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.names}
+              </option>
+            ))}
+          </select>
         </div>
         <button type="submit" class="btn btn-primary">
           Submit

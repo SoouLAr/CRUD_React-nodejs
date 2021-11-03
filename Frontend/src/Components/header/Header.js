@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-export const Header = ({ setIsOpen, setIsSuccesCreatedItem }) => {
+export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModalCategoryOpen }) => {
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <Link
@@ -23,19 +22,28 @@ export const Header = ({ setIsOpen, setIsSuccesCreatedItem }) => {
           </li>
           <li class="nav-item">
             <div
+              style={{cursor:"pointer"}}
               class="nav-link"
               onClick={() => {
+                setItemModal(true)
                 setIsOpen(true);
               }}
-              to="/s"
+              
             >
               Add Item
             </div>
           </li>
           <li class="nav-item">
-            <Link class="nav-link" to="/s">
+            <div 
+            style={{cursor:"pointer"}}
+            onClick={()=>{
+              setModalCategoryOpen(true)
+            }}
+            class="nav-link" 
+            to="/s"
+            >
               Add Category
-            </Link>
+            </div>
           </li>
         </ul>
       </div>

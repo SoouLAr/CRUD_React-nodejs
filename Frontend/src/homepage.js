@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import ModalItem from "./Components/modals/modalCreateItem";
+import {ModalItem} from "./Components/modals/modalCreateItem";
 import toast, { Toaster } from "react-hot-toast";
 import { CategoryComponent } from "./Components/category/categoryComponent";
 import { ItemComponent } from "./Components/item-wrapper/itemCategory";
@@ -12,14 +12,18 @@ import { ItemsByCategory } from "./Components/items/itemsbyCategory";
 import { EditItem } from "./Components/edit-item/EditItem";
 import { Header } from "./Components/header/Header";
 import "./homepage.css";
+import { ModalCategory } from "./Components/modals/modalCreateCategory";
 
 function HomePage() {
   const [errors, setErrors] = useState({});
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
+  const [categoryAdded,setCategoryAdded]=useState(0)
   const [isSuccesCreatedItem, setIsSuccesCreatedItem] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryDidChnage, setCategoryDidChange] = useState(0);
   const [didCategoryChange, setDidCategoryChange] = useState(false);
+  const [itemModal,setItemModal]=useState(true)
 
   const viewidth =
     document.documentElement.clientWidth < 640
@@ -64,13 +68,16 @@ function HomePage() {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [categoryAdded]);
 
   return (
     <div className="homepage">
       <Toaster position="top-center" reverseOrder={false} />
       <Header
+        setItemModal={setItemModal}
+        itemModal={itemModal}
         setIsOpen={setIsOpen}
+        setModalCategoryOpen={setModalCategoryOpen}
         isSuccesCreatedItem={isSuccesCreatedItem}
         setIsSuccesCreatedItem={setIsSuccesCreatedItem}
         setCategories={setCategories}
@@ -101,7 +108,7 @@ function HomePage() {
             <ItemsByCategory didCategoryChange={didCategoryChange} categoryDidChnage={categoryDidChnage} />
           </Route>
           <Route path="/edit/:id">
-            <EditItem toast={toast} />
+            <EditItem categories={categories} toast={toast} />
           </Route>
           <Route>
             <Route path="/items/:_id">
@@ -110,6 +117,7 @@ function HomePage() {
           </Route>
         </Switch>
         <ModalItem
+          itemModal={itemModal}
           modalIsOpen={modalIsOpen}
           closeModal={() => setIsOpen(false)}
           categories={categories}
@@ -117,6 +125,14 @@ function HomePage() {
           ariaHideApp={false}
           errors={errors}
           setErrors={setErrors}
+        />
+        <ModalCategory
+          categoryAdded={categoryAdded}
+          setCategoryAdded={setCategoryAdded}
+          itemModal={itemModal}
+          modalCategoryOpen={modalCategoryOpen}
+          closeModal={() => setModalCategoryOpen(false)}
+          ariaHideApp={false}
         />
       </div>
     </div>
