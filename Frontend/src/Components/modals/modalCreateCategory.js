@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import axios from 'axios'
-import update from 'react-addons-update';
 import { toast } from "react-hot-toast";
 import {useHistory} from 'react-router-dom'
 import "./modalItem.css";
@@ -82,9 +81,17 @@ export const ModalCategory = ({ modalCategoryOpen, closeModal,categoryAdded,setC
             />
           </div>
         </div>
+        <div className="row justify-content-between col-md-5">
         <button type="submit" class="btn btn-success">
           Create
         </button>
+        <button 
+        className="btn btn-danger align-self-end"
+        onClick={()=>{closeModal()}}
+        >
+          Close
+        </button>
+        </div>
       </form>
     </Modal>
   );

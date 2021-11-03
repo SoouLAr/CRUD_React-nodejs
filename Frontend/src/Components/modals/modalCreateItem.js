@@ -1,46 +1,52 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import axios from "axios";
+import {toast} from 'react-hot-toast'
+import {useHistory} from 'react-router-dom'
 import "./modalItem.css";
 
-export const ModalItem=({modalIsOpen,closeModal,categories,addItem,errors,setErrors})=>{
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    display: "flex",
+    flexDirection: "column",
+    padding: "20px 50px",
+    backgroundColor: "white",
+    borderRadius: 10,
+  },
+};
+
+export const ModalItem = ({modalIsOpen,closeModal,categories,}) => {
+  console.log(categories);
+  Modal.setAppElement("#root");
+  const history=useHistory();
   const initialState = {
     name: "",
     price: undefined,
     unit: undefined,
     image: "",
-    category: categories.length > 0 ? categories[0]._id : "",
+    category: ''
   };
 
   const [state, setState] = useState(initialState);
 
-  Modal.setAppElement("#root");
+  const handleChange = (e) => {setState({...state,[e.target.name]: e.target.value,});};
 
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      display: "flex",
-      flexDirection: "column",
-      padding: "20px 50px",
-      backgroundColor: "white",
-      borderRadius: 10,
-    },
-  };
+  const handleSubmit = async(e)=>{
+      e.preventDefault();
+      const {data} = await axios.post("http://localhost:5000/item/addItem/",state)
+      if (data.status===201) {
+        toast.success("Item added succsesfully")
+        closeModal()
+        history.push('/')
+      }
+  }
 
-  const handleChange = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-    setErrors({
-      ...errors,
-      [e.target.name]: null,
-    });
-  };
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -48,107 +54,76 @@ export const ModalItem=({modalIsOpen,closeModal,categories,addItem,errors,setErr
       style={customStyles}
       contentLabel="Example Modal"
     >
-      <h2 className="modal__title">Add Item</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="input_wrapper">
-          <div className="input__labels">
-            <p className="input_label">Name</p>
-            {errors.name && <p className="span__name">Check name</p>}
+      <form onSubmit={handleSubmit}>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Name</label>
+            <input
+              name="name"
+              onChange={handleChange}
+              type="text"
+              class="form-control"
+              id="inputEmail4"
+            />
           </div>
-          <input
-            value={state.name}
-            onChange={handleChange}
-            className="input"
-            name="name"
-          />
         </div>
-        <div className="input_wrapper">
-          <div className="input__labels">
-            <p className="input_label">Price</p>
-            {errors.price && <p className="span__name">Price larger than 0</p>}
-          </div>
+        <div class="form-group">
+          <label for="inputAddress">Image (URL)</label>
           <input
-            type="number"
-            value={state.price}
-            onChange={handleChange}
-            className="input"
-            name="price"
-          />
-        </div>
-        <div className="input_wrapper">
-          <div className="input__labels">
-            <p className="input_label">Unit</p>
-            {errors.unit && <p className="span__name">Unit larger than 0</p>}
-          </div>
-          <input
-            type="number"
-            value={state.unit}
-            onChange={handleChange}
-            className="input"
-            name="unit"
-          />
-        </div>
-        <div className="input_wrapper">
-          <div className="input__labels">
-            <p className="input_label">Image</p>
-            {errors.image && (
-              <p className="span__name">Make sure a image url</p>
-            )}
-          </div>
-          <input
-            value={state.image}
-            onChange={handleChange}
-            className="input"
             name="image"
+            onChange={handleChange}
+            type="url"
+            class="form-control"
+            id="inputAddress"
           />
         </div>
-        <div className="select_input">
-          <p className="input_label">Category</p>
-          <select
-            name="category"
-            className="category__select"
-            value={state.category}
-            onChange={handleChange}
-          >
-            {categories.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.names}
-              </option>
-            ))}
-          </select>
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <label for="inputCity">Price</label>
+            <input
+              name="price"
+              onChange={handleChange}
+              type="number"
+              class="form-control"
+              id="inputCity"
+            />
+          </div>
+          <div class="form-group col-md-5">
+            <label for="inputCity">Unit</label>
+            <input
+              name="unit"
+              onChange={handleChange}
+              type="number"
+              class="form-control"
+              id="inputCity"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">Category</label>
+            <select
+              name="category"
+              onChange={handleChange}
+              id="inputState"
+              class="form-control"
+            >
+              {categories.map((category, index) => {
+                return <option  value={category._id} key={index}>{category.names[0]}</option>;
+              })}
+            </select>
+          </div>
         </div>
-        <div className="buttons_wrapper">
-          <button
-            className="modal__submit"
-            onClick={() => {
-              addItem(
-                state.name,
-                state.price,
-                state.unit,
-                state.image,
-                state.category
-              );
-            }}
-          >
-            {" "}
-            Create{" "}
-          </button>
-          <button
-            className="modal__cancel"
-            onClick={() => {
-              setState(initialState);
-              closeModal();
-              Object.keys(errors).forEach((e) => (errors[e] = null));
-            }}
-          >
-            Cancel
-          </button>
+        <div className="row justify-content-between col-md-5">
+        <button type="submit" class="btn btn-success">
+          Submit
+        </button>
+        <button 
+        className="btn btn-danger align-self-end"
+        onClick={()=>{closeModal()}}
+        >
+          Close
+        </button>
         </div>
       </form>
     </Modal>
   );
-}
+};

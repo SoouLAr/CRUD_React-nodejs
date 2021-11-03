@@ -20,6 +20,7 @@ export const EditItem = ({categories}) => {
       [e.target.name]: e.target.value,
     });
   };
+  
 
   const updateItem = async (e) => {
     e.preventDefault();
