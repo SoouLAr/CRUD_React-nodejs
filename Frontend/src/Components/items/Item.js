@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {React, useEffect, useState} from 'react'
 
-export const Item = ({isItemLoading,Loader,ItemComponent})=>{
+export const Item = ({isItemLoading,ItemComponent})=>{
   const [items,setItems]=useState([])
   const fetchItems=async ()=>{
       const itemsFetched = await axios.get("http://127.0.0.1:5000/item")
@@ -11,13 +11,6 @@ export const Item = ({isItemLoading,Loader,ItemComponent})=>{
     fetchItems()
     // eslint-disable-next-line
   },[])
-   if (isItemLoading) {
-       return (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-               <Loader />
-             </div>
-       )
-   } else {
        return(
         <div style={{ marginTop: "30px" }}>
            <h1 className="items__header">Items</h1>
@@ -28,6 +21,4 @@ export const Item = ({isItemLoading,Loader,ItemComponent})=>{
            </div>
          </div>
        )
-   }
-    
 }

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Slider from "react-slick";
-import Loader from "./Components/loader/Loader";
-import ModalItem from "./Components/modalCreateItem";
+import ModalItem from "./Components/modals/modalCreateItem";
 import toast, { Toaster } from "react-hot-toast";
 import { CategoryComponent } from "./Components/category/categoryComponent";
 import { ItemComponent } from "./Components/item-wrapper/itemCategory";
 import { Route, Switch } from "react-router";
-import { Item } from "./Components/Item";
-import { ItemPreview } from "./Components/ItemPreview";
-
-import { ItemsByCategory } from "./Components/itemsbyCategory";
+import { Item } from "./Components/items/Item";
+import { ItemPreview } from "./Components/items/ItemPreview";
+import { ItemsByCategory } from "./Components/items/itemsbyCategory";
 import { EditItem } from "./Components/edit-item/EditItem";
 import { Header } from "./Components/header/Header";
 import "./homepage.css";
@@ -21,7 +19,7 @@ function HomePage() {
   const [isSuccesCreatedItem, setIsSuccesCreatedItem] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryDidChnage, setCategoryDidChange] = useState(0);
-
+  const [didCategoryChange, setDidCategoryChange] = useState(false);
 
   const viewidth =
     document.documentElement.clientWidth < 640
@@ -77,21 +75,30 @@ function HomePage() {
         setIsSuccesCreatedItem={setIsSuccesCreatedItem}
         setCategories={setCategories}
       />
-      <div className="bodyMix">
+      <div className="bodyMix bg-light">
         <div className="categories">
           <h2 className="category__header"> Categories</h2>
           <Slider {...settings}>
             {categories.map((item) => {
-              return <CategoryComponent key={item._id} item={item} />;
+              return (
+                <CategoryComponent
+                  didCategoryChange
+                  setDidCategoryChange={() => {
+                    setDidCategoryChange(!didCategoryChange);
+                  }}
+                  key={item._id}
+                  item={item}
+                />
+              );
             })}
           </Slider>
         </div>
         <Switch>
           <Route exact path="/">
-            <Item Loader={Loader} ItemComponent={ItemComponent} />
+            <Item  ItemComponent={ItemComponent} />
           </Route>
           <Route path="/category/:id">
-            <ItemsByCategory  categoryDidChnage={categoryDidChnage} />
+            <ItemsByCategory didCategoryChange={didCategoryChange} categoryDidChnage={categoryDidChnage} />
           </Route>
           <Route path="/edit/:id">
             <EditItem toast={toast} />

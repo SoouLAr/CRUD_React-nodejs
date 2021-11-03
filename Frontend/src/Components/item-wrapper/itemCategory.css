@@ -42,7 +42,7 @@
     background: rgba(0, 0, 0, 0.6);
   }
   
-  .hovereffect a.info {
+  .hovereffect .info {
     display: inline-block;
     text-decoration: none;
     padding: 7px 14px;
@@ -51,11 +51,11 @@
     background-color: transparent;
   }
   
-  .hovereffect a.info:hover {
-    box-shadow: 0 0 5px #fff;
+  .hovereffect .info:hover {
+    box-shadow: 0 0 5px rgb(32, 5, 155);
   }
   
-  .hovereffect a.info, .hovereffect h2 {
+  .hovereffect .info, .hovereffect h2 {
     -webkit-transform: scale(0.7);
     -ms-transform: scale(0.7);
     transform: scale(0.7);
@@ -67,7 +67,7 @@
     text-transform: uppercase;
   }
   
-  .hovereffect:hover a.info, .hovereffect:hover h2 {
+  .hovereffect:hover .info, .hovereffect:hover h2 {
     opacity: 1;
     filter: alpha(opacity=100);
     -webkit-transform: scale(1);

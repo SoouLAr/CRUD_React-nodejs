@@ -1,19 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {  useParams } from "react-router";
-import {ItemComponent} from "./item-wrapper/itemCategory";
+import {ItemComponent} from "../item-wrapper/itemCategory";
 
-export const ItemsByCategory = ()=>{
+export const ItemsByCategory = ({didCategoryChange})=>{
     const {id} = useParams();
     const [items,setItems]=useState([])
     const fetchItems = async ()=>{
         const {data}=await axios.get(`http://localhost:5000/item/getItemByCategory/${id}`)
         setItems(data)
+        console.log(data);
     }
     useEffect(()=>{
         fetchItems()
         // eslint-disable-next-line
-    },[items])
+    },[didCategoryChange])
     
     return (
         <div style={{ marginTop: "30px" }}>

@@ -2,30 +2,29 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../carousel/carousel.css";
 
-export const CategoryComponent = ({item}) => {
+export const CategoryComponent = ({ item,setDidCategoryChange,didCategoryChange}) => {
   return (
-    
-      <Link
-        to={`/category/${item._id}`}
-        className="nested"
-        style={{
-          backgroundImage:
-            "linear-gradient(90deg, rgba(106,102,184,1) 0%, rgba(0,212,255,0.5592437658657212) 100%)",
-        }}
-      >
+    <div
+      class="col-lg-12 col-md-4 col-sm-6 col-xs-12 mt-5"
+      style={{ height: "290px" }}
+    >
+      <div class="hovereffect">
         <img
-          className="imageCategory"
-          src={item.images}
+          class="img-responsive"
+          width="100%"
+          height="100%"
+          src={`${item.images}`}
           alt=""
-          style={{
-            zIndex: "-5",
-            height: "280px",
-            width: "640px",
-            opacity: "40%",
-            display: "inline-block",
-          }}
         />
-        <h1 className="image__header">{item.names}</h1>
-      </Link>
+        <div class="overlay">
+          <h2>{`${item.names[0]}`}</h2>
+          <Link 
+          onClick={()=>{setDidCategoryChange()}} 
+            class="info" to={`/category/${item._id}`}>
+            link here
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
