@@ -9,7 +9,6 @@ export const ItemsByCategory = ({didCategoryChange})=>{
     const fetchItems = async ()=>{
         const {data}=await axios.get(`http://localhost:5000/item/getItemByCategory/${id}`)
         setItems(data)
-        console.log(data);
     }
     useEffect(()=>{
         fetchItems()

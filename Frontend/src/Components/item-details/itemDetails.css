@@ -1,14 +1,14 @@
 .item-details{
     display: flex;
-    margin-top: 35px;
+    margin: 75px auto;
     padding: 0 40px;
 }
 .image{
-    width: 500px;
-    height: 500px;
+    width: 300px;
+    height: 300px;
 }
 .details{
-    padding: 100px 0 20px 100px;
+    padding-left: 50px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;

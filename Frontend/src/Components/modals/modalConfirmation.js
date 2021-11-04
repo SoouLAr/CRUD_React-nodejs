@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-modal";
-import axios from "axios";
-import { toast } from "react-hot-toast";
-import { useHistory } from "react-router-dom";
 import "./modalItem.css";
+
 const customStyles = {
   content: {
     top: "50%",

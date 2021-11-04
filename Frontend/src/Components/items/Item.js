@@ -3,13 +3,12 @@ import {React, useEffect, useState} from 'react'
 
 export const Item = ({ItemComponent})=>{
   const [items,setItems]=useState([])
-  const fetchItems=async ()=>{
-      const itemsFetched = await axios.get("http://127.0.0.1:5000/item")
-      setItems(...items,itemsFetched.data);
+  const fetchItems= async ()=>{
+      const {data} = await axios.get("http://127.0.0.1:5000/item")
+      setItems(...items,data);
   }
   useEffect(()=>{
     fetchItems()
-    // eslint-disable-next-line
   },[])
        return(
         <div style={{ marginTop: "30px" }}>

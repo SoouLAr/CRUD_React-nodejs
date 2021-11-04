@@ -13,7 +13,6 @@ import { EditItem } from "./Components/edit-item/EditItem";
 import { Header } from "./Components/header/Header";
 import "./homepage.css";
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
-import {ModalConfirmation} from './Components/modals/modalConfirmation'
 
 function HomePage() {
   const [errors, setErrors] = useState({});
@@ -21,12 +20,9 @@ function HomePage() {
   const [categoryAdded,setCategoryAdded]=useState(0)
   const [isSuccesCreatedItem, setIsSuccesCreatedItem] = useState(0);
   const [categories, setCategories] = useState([]);
-  const [categoryDidChnage, setCategoryDidChange] = useState(0);
   const [didCategoryChange, setDidCategoryChange] = useState(false);
   const [itemModal,setItemModal]=useState(true)
   const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
-
-
   const viewidth =
     document.documentElement.clientWidth < 640
       ? 1
@@ -109,7 +105,7 @@ function HomePage() {
             <Item  ItemComponent={ItemComponent} />
           </Route>
           <Route path="/category/:id">
-            <ItemsByCategory didCategoryChange={didCategoryChange} categoryDidChnage={categoryDidChnage} />
+            <ItemsByCategory didCategoryChange={didCategoryChange} />
           </Route>
           <Route path="/edit/:id">
             <EditItem categories={categories} toast={toast} />
@@ -128,7 +124,7 @@ function HomePage() {
           addItem={createItem}
           ariaHideApp={false}
           errors={errors}
-          setErrors={setErrors}
+          setErrors={setErrors}        
         />
         <ModalCategory
           categoryAdded={categoryAdded}

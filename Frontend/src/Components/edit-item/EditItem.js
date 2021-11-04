@@ -36,6 +36,7 @@ export const EditItem = ({categories}) => {
   };
   useEffect(() => {
     fetchitem();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -75,7 +76,7 @@ export const EditItem = ({categories}) => {
           <p className="input_label">Category</p>
           <select
             name="category"
-            className="category__select"
+            className="form-control ml-4 "
             value={item.category}
             onChange={handleChange}
           >
@@ -86,7 +87,7 @@ export const EditItem = ({categories}) => {
             ))}
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary mt-2">
           Submit
         </button>
       </form>

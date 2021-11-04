@@ -25,6 +25,7 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
       <div class="hovereffect">
         <img
           class="img-responsive"
+          onError={(e)=> {e.target.onError=null; e.target.src="https://bitsofco.de/content/images/2018/12/broken-1.png"}}
           width="100%"
           height="100%"
           src={`${item.images}`}
