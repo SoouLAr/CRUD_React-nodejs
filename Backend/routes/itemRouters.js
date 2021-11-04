@@ -13,6 +13,9 @@ routes.post('/addItem',ItemController.addItem)
 //Delete an item by a given ID
 routes.delete('/deleteItem/:itemId',ItemController.deleteItem)
 
+//Delete all item when category is deleted
+routes.delete('/deleteItemsByCategory/:categoryId',ItemController.deleteItemByCategory)
+
 //Reprice an item by a given id
 routes.patch('/updateItem/:id',ItemController.updateItem)
 

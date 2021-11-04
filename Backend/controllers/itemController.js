@@ -53,6 +53,22 @@ exports.deleteItem=async (req,res)=>{
     }
 }
 
+exports.deleteItemByCategory = async (req,res)=>{
+    try{
+        if (!ObjectId.isValid(req.params.categoryId)) {
+            res.send("Please make sure the Category ID is valid")
+        } else {
+            await Item.deleteMany({category:req.params.categoryId})
+            res.send({
+                status:201,
+                message:"Items were deleted succesfully"
+            })
+        }
+    }catch(error){
+        res.send(error)
+    }
+}
+
 exports.updateItem=async (req,res)=>{
     if (!ObjectId.isValid(req.params.id)){
         res.send("Please give a valid ID")
