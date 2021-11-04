@@ -74,3 +74,16 @@
     -ms-transform: scale(1);
     transform: scale(1);
   }
+  .hovereffect .delete-icon{
+    cursor: pointer;
+    position: absolute;
+    bottom: 10%;
+    right:10%;
+    color: red;
+    border: transparent;
+    box-shadow: 0 0 5px rgb(182, 5, 5);
+    border-radius: 5px;
+  }
+  .hovereffect .delete-icon:hover {
+    box-shadow: 0 0 5px rgb(182, 5, 5);
+  }

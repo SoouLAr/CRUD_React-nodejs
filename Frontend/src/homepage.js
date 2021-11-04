@@ -13,17 +13,19 @@ import { EditItem } from "./Components/edit-item/EditItem";
 import { Header } from "./Components/header/Header";
 import "./homepage.css";
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
+import {ModalConfirmation} from './Components/modals/modalConfirmation'
 
 function HomePage() {
   const [errors, setErrors] = useState({});
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
   const [categoryAdded,setCategoryAdded]=useState(0)
   const [isSuccesCreatedItem, setIsSuccesCreatedItem] = useState(0);
   const [categories, setCategories] = useState([]);
   const [categoryDidChnage, setCategoryDidChange] = useState(0);
   const [didCategoryChange, setDidCategoryChange] = useState(false);
   const [itemModal,setItemModal]=useState(true)
+  const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
+
 
   const viewidth =
     document.documentElement.clientWidth < 640
@@ -89,6 +91,8 @@ function HomePage() {
             {categories.map((item) => {
               return (
                 <CategoryComponent
+                  categoryAdded={categoryAdded}
+                  setCategoryAdded={setCategoryAdded}
                   didCategoryChange
                   setDidCategoryChange={() => {
                     setDidCategoryChange(!didCategoryChange);
@@ -134,6 +138,7 @@ function HomePage() {
           closeModal={() => setModalCategoryOpen(false)}
           ariaHideApp={false}
         />
+        
       </div>
     </div>
   );

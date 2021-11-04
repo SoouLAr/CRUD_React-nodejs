@@ -22,7 +22,6 @@ const customStyles = {
 };
 
 export const ModalItem = ({modalIsOpen,closeModal,categories,}) => {
-  console.log(categories);
   Modal.setAppElement("#root");
   const history=useHistory();
   const initialState = {

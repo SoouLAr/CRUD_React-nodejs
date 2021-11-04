@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {React, useEffect, useState} from 'react'
 
-export const Item = ({isItemLoading,ItemComponent})=>{
+export const Item = ({ItemComponent})=>{
   const [items,setItems]=useState([])
   const fetchItems=async ()=>{
       const itemsFetched = await axios.get("http://127.0.0.1:5000/item")
