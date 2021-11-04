@@ -11,8 +11,9 @@ import { ItemPreview } from "./Components/items/ItemPreview";
 import { ItemsByCategory } from "./Components/items/itemsbyCategory";
 import { EditItem } from "./Components/edit-item/EditItem";
 import { Header } from "./Components/header/Header";
-import "./homepage.css";
+import {ContactUs} from './Components/contact-us/ContactUs'
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
+import "./homepage.css";
 
 function HomePage() {
   const [errors, setErrors] = useState({});
@@ -36,27 +37,6 @@ function HomePage() {
     speed: 500,
     slidesToShow: viewidth,
     slidesToScroll: viewidth,
-  };
-
-  const createItem = (name, price, unit, image, category) => {
-    setIsOpen(true);
-    axios
-      .post("http://127.0.0.1:5000/item/addItem", {
-        name: name,
-        price: price,
-        unit: unit,
-        image: image,
-        category: category,
-      })
-      .then((res) => {
-        setIsSuccesCreatedItem(isSuccesCreatedItem + 1);
-        setIsOpen(false);
-        toast.success("Item added success!");
-      })
-      .catch((e) => {
-        setErrors(e.response.data);
-        toast.error("Item failed to add");
-      });
   };
 
   const fetchCategories = async () => {
@@ -104,6 +84,9 @@ function HomePage() {
           <Route exact path="/">
             <Item  ItemComponent={ItemComponent} />
           </Route>
+          <Route  path='/contactUs'>
+              <ContactUs />
+          </Route>
           <Route path="/category/:id">
             <ItemsByCategory didCategoryChange={didCategoryChange} />
           </Route>
@@ -121,7 +104,6 @@ function HomePage() {
           modalIsOpen={modalIsOpen}
           closeModal={() => setIsOpen(false)}
           categories={categories}
-          addItem={createItem}
           ariaHideApp={false}
           errors={errors}
           setErrors={setErrors}        

@@ -16,7 +16,7 @@ export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModal
       <div class="collapse navbar-collapse  " id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <Link class="nav-link" to="/contact-us">
+            <Link class="nav-link" to="/contactUs">
               Contact Us
             </Link>
           </li>
