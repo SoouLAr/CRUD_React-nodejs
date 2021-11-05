@@ -13,6 +13,7 @@ import { EditItem } from "./Components/edit-item/EditItem";
 import { Header } from "./Components/header/Header";
 import {ContactUs} from './Components/contact-us/ContactUs'
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
+import { NotFound } from "./Components/not-found/NotFound";
 import "./homepage.css";
 
 function HomePage() {
@@ -82,10 +83,10 @@ function HomePage() {
         </div>
         <Switch>
           <Route exact path="/">
-            <Item  ItemComponent={ItemComponent} />
+            <Item ItemComponent={ItemComponent} />
           </Route>
-          <Route  path='/contactUs'>
-              <ContactUs />
+          <Route path="/contactUs">
+            <ContactUs />
           </Route>
           <Route path="/category/:id">
             <ItemsByCategory didCategoryChange={didCategoryChange} />
@@ -93,11 +94,10 @@ function HomePage() {
           <Route path="/edit/:id">
             <EditItem categories={categories} toast={toast} />
           </Route>
-          <Route>
-            <Route path="/items/:_id">
-              <ItemPreview />
-            </Route>
+          <Route  path="/items/:_id">
+            <ItemPreview />
           </Route>
+          <Route path="*" component={NotFound} />
         </Switch>
         <ModalItem
           itemModal={itemModal}
@@ -106,7 +106,7 @@ function HomePage() {
           categories={categories}
           ariaHideApp={false}
           errors={errors}
-          setErrors={setErrors}        
+          setErrors={setErrors}
         />
         <ModalCategory
           categoryAdded={categoryAdded}
@@ -116,7 +116,6 @@ function HomePage() {
           closeModal={() => setModalCategoryOpen(false)}
           ariaHideApp={false}
         />
-        
       </div>
     </div>
   );
