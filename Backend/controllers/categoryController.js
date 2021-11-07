@@ -2,6 +2,7 @@ const express = require('express');
 const Categorie = require('../model/Categorie');
 var ObjectId = require('mongoose').Types.ObjectId;
 
+
 exports.getAllCategory= async (req,res)=>{
     try {
         const allCategories = await Categorie.find()
@@ -16,7 +17,7 @@ exports.addCategory= async (req,res)=>{
         if (!/[^a-zA-Z]+$/.test(req.body.names)) {
             const newCategorie = await Categorie.create({
                 names: req.body.names, 
-                images:req.body.images})
+                images:"http://localhost:5000/"+req.file.path})
             res.send(newCategorie)
             }
         else {

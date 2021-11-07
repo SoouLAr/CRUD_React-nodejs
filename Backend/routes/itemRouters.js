@@ -2,13 +2,14 @@ const express = require('express');
 const Item = require('../model/Items')
 const ItemController = require('../controllers/itemController')
 const routes = express.Router()
+const {upload}=require('../index')
 
 
 //Get all items
 routes.get('/',ItemController.getAll)
 
 //Add a new Item
-routes.post('/addItem',ItemController.addItem)
+routes.post('/addItem',upload.single('image'),ItemController.addItem)
 
 //Delete an item by a given ID
 routes.delete('/deleteItem/:itemId',ItemController.deleteItem)

@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@700&display=swap');
 
+.pointer{
+    cursor: pointer;
+}
 
 .open__modal{
     cursor: pointer;

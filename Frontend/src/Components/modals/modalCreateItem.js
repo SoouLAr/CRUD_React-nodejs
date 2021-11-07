@@ -38,7 +38,13 @@ export const ModalItem = ({modalIsOpen,closeModal,categories}) => {
 
   const handleSubmit = async(e)=>{
       e.preventDefault();
-      const {data} = await axios.post("http://localhost:5000/item/addItem/",state)
+      var bodyFormData = new FormData();
+      bodyFormData.append('image', state.image);
+      bodyFormData.set("name",state.name)
+      bodyFormData.set("price",state.price)
+      bodyFormData.set("unit",state.unit)
+      bodyFormData.set("category",state.category)
+      const {data} = await axios.post("http://localhost:5000/item/addItem/",bodyFormData)
       if (data.status===201) {
         toast.success("Item added succsesfully")
         closeModal()
@@ -67,11 +73,11 @@ export const ModalItem = ({modalIsOpen,closeModal,categories}) => {
           </div>
         </div>
         <div class="form-group">
-          <label for="inputAddress">Image (URL)</label>
+          <label for="inputAddress">Image</label>
           <input
             name="image"
-            onChange={handleChange}
-            type="url"
+            onChange={e=>setState({...state,image:e.target.files[0]})}
+            type="file"
             class="form-control"
             id="inputAddress"
           />

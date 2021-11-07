@@ -15,12 +15,11 @@ exports.getAll=async (req,res)=>{
 
 exports.addItem=async (req,res)=>{
     try{
-            const item = await Item.create({
-                _id : ObjectId(req.body.id),
+             await Item.create({
                 name: req.body.name,
                 unit: req.body.unit,
                 price: req.body.price,
-                image: req.body.image,
+                image: "http://localhost:5000/"+req.file.path,
                 category: req.body.category
                 })
             res.send({

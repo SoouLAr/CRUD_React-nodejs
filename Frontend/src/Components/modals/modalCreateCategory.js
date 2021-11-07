@@ -19,31 +19,35 @@ const customStyles = {
     borderRadius: 10,
   },
 };
+const initialState={
+  names: '',
+  image: {},
+}
 export const ModalCategory = ({ modalCategoryOpen, closeModal,categoryAdded,setCategoryAdded }) => {
   Modal.setAppElement("#root");
   const history = useHistory();
-  const [name,setName]=useState('')
-  const [category, setCategory] = useState({
-    names: [""],
-    images: "",
-  });
+  const [category, setCategory] = useState(initialState);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (category.names === "" && category.images === "") {
+    var bodyFormData = new FormData();
+    bodyFormData.append('image', category.image);
+    bodyFormData.set('names',[category.names.toUpperCase()])
+    if (category.names === "" || category.image.size === undefined) {
       toast.error("Please complete the form");
       return 0;
     }
-    if (/^[^a-zA-Z]+$/.test(category.names[0])) {
-      console.log("Here");
-      return 0;
+    if (/[^a-zA-Z]/.test(category.names[0])){
+          toast.error("Name should not contain numbers or symbol")
+          return 0;
     }
-    category.names[0]=name;
-    const { status } = await axios.post(
+    const response = await axios.post(
       "http://localhost:5000/category/addCategory",
-      category
+      bodyFormData
     );
-    if (status === 200) {
+    if (response.status === 200) {
+      setCategory(initialState)
       toast.success("Added successfully");
       closeModal();
       history.push("/");
@@ -64,20 +68,20 @@ export const ModalCategory = ({ modalCategoryOpen, closeModal,categoryAdded,setC
             <label for="inputEmail4">Name</label>
             <input
               name="names"
-              value={name}
-              onChange={(e) => {setName(e.target.value)}}
+              value={category.names}
+              onChange={(e) => {setCategory({...category,names:e.target.value})}}
               type="text"
               class="form-control"
             />
           </div>
-          <div class="form-group col-md-12">
-            <label for="inputPassword4">Image (URL)</label>
+          <div class="form-group  col-md-12">
+            <label>Image</label>
             <input
-              onChange={(e)=>{setCategory({...category,images:e.target.value})}}
+              onChange={(e)=>{setCategory({...category,image:e.target.files[0]})}}
               name="images"
               value={category.images}
-              type="url"
-              class="form-control"
+              type="file"
+              class="form-control pointer"
             />
           </div>
         </div>
