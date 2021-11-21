@@ -8,8 +8,8 @@ import './itemDetails.css'
 export const ItemDetails=({item})=>{
     const history = useHistory()
     const handleDelete = async ()=>{
-        const {data} = await axios.delete(`http://localhost:5000/item/deleteItem/${item._id}`)
-        if (data.status === 201){
+        const data = await axios.delete(`https://6vy0y6749g.execute-api.eu-south-1.amazonaws.com/dev/deleteItem/${item._id}`)
+        if (data.status === 200){
             history.push("/")
         }
     }

@@ -9,13 +9,12 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
   const [modalConfimationOpen, setModalConfirmationOpen] = useState(false);
 
   const handleDelete = async (id)=>{
-    const itemsDeletedByCategory = await axios.delete(`http://localhost:5000/item/deleteItemsByCategory/${id}`)
-    if (itemsDeletedByCategory.data.status===201){
-    const {status} = await axios.delete(`http://localhost:5000/category/deleteCategory/${id}`)
+    
+    const {status} = await axios.delete(`https://iy9sfrvm61.execute-api.eu-south-1.amazonaws.com/dev/deleteCategory/${id}`)
     if (status===200){
     toast.success("category deleted successfully!")
-    setCategoryAdded(categoryAdded+1)      
-    }} else {toast.error("Catgory didn't delete!")}
+    setCategoryAdded(categoryAdded+1)}
+     else {toast.error("Catgory didn't delete!")}
   }
   return (
     <div
@@ -28,11 +27,11 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
           onError={(e)=> {e.target.onError=null; e.target.src="https://bitsofco.de/content/images/2018/12/broken-1.png"}}
           width="100%"
           height="100%"
-          src={`${item.images}`}
+          src={`${item.image}`}
           alt=""
         />
         <div class="overlay">
-          <h2>{`${item.names[0]}`}</h2>
+          <h2>{`${item.name}`}</h2>
           <Link 
           onClick={()=>{setDidCategoryChange()}} 
             class="info" to={`/category/${item._id}`}>

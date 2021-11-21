@@ -1,4 +1,5 @@
 require('dotenv').config();
+const serverless = require('serverless-http');
 const express = require('express')
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -25,7 +26,6 @@ const upload = multer({storage:storage,limits:{fileSize:1024*1024*8},fileFilter:
 // EXPORT THE UPLOAD MODULE
 module.exports={upload}
 
-
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
@@ -48,8 +48,5 @@ app.use('/category',categorieRouters);
 app.use('/item',itemRouters)
 
 
-
-
-const port = process.env.PORT;
-app.listen(port,()=>console.log('server started!'));
+module.exports.handler=serverless(app)
 

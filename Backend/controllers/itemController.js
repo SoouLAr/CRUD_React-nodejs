@@ -19,7 +19,7 @@ exports.addItem=async (req,res)=>{
                 name: req.body.name,
                 unit: req.body.unit,
                 price: req.body.price,
-                image: "http://localhost:5000/"+req.file.path,
+                image: "https://tahir-bucket-images.s3.eu-south-1.amazonaws.com/1637271979471.png",
                 category: req.body.category
                 })
             res.send({

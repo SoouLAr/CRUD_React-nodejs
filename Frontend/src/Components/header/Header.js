@@ -45,6 +45,9 @@ export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModal
               Add Category
             </div>
           </li>
+          <li class="nav-item" >
+            <Link to="/about" class="nav-link">About</Link>
+          </li>
         </ul>
       </div>
     </nav>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import {toast} from 'react-hot-toast'
-import {useHistory} from 'react-router-dom'
+import { toast } from "react-hot-toast";
+import { useHistory } from "react-router-dom";
 import "./modalItem.css";
 
 const customStyles = {
@@ -20,37 +20,122 @@ const customStyles = {
     borderRadius: 10,
   },
 };
+export const initialErrors = {
+  name: undefined,
+  image: undefined,
+  price: undefined,
+  unit: undefined,
+  category: undefined,
+};
 
-export const ModalItem = ({modalIsOpen,closeModal,categories}) => {
+export const ModalItem = ({ modalIsOpen, closeModal, categories }) => {
   Modal.setAppElement("#root");
-  const history=useHistory();
+  const history = useHistory();
   const initialState = {
     name: "",
     price: undefined,
     unit: undefined,
     image: "",
-    category: ''
+    category: "",
+  };
+  const initialErrors = {
+    name: undefined,
+    image: undefined,
+    price: undefined,
+    unit: undefined,
+    category: undefined,
+  };
+  const [url, setUrl] = useState("");
+  const [state, setState] = useState(initialState);
+  const [errors, setErrors] = useState(initialErrors);
+
+  const handleChange = (e) => {
+    switch (e.target.name) {
+      case "name":
+        // Checks if the name will be empty and place it
+        if (e.target.value === "") {
+          setState({ ...state, name: e.target.value });
+          setErrors({ ...errors, name: false });
+          break;
+        }
+        // Check if the name contains symbols or numbers
+        if (/^[A-Za-z]+$/.test(e.target.value)) {
+          setState({ ...state, name: e.target.value });
+          e.target.value !== ""
+            ? setErrors({ ...errors, name: false })
+            : setErrors({ ...errors, name: true });
+        } else {
+          setState({ ...state, name: e.target.value });
+          setErrors({ ...errors, name: true });
+        }
+        break;
+        case "unit":
+          if(e.target.value===""){
+            setErrors({...errors,unit:false})
+            break;
+          }
+          if (/^[1-9]+$/.test(e.target.value)){
+            setState({...state,unit:e.target.value})
+            setErrors({...errors,unit: false})
+          } else {
+            setErrors({...errors,unit:true})
+            setState({...state,unit:e.target.value})
+          }
+        break;
+        case "price":
+          if(e.target.value===""){
+            setErrors({...errors,price:false})
+            break;
+          }
+          if (/^[1-9]+$/.test(e.target.value)){
+            setState({...state,price:e.target.value})
+            setErrors({...errors,price: false})
+          } else {
+            setErrors({...errors,price:true})
+            setState({...state,price:e.target.value})
+          }
+        break;
+        case "category":
+          setState({...state,category:e.target.value})
+        break;
+    }
   };
 
-  const [state, setState] = useState(initialState);
+  const handleImage = async (e) => {
+    if (e.target.files[0].type.startsWith("image/")) {
+      setState({ ...state, image: e.target.files[0]});
+      setErrors({ ...errors, image: false });
+      const { data } = await axios.get(
+        `https://w3mjpdk90m.execute-api.eu-south-1.amazonaws.com/dev/getUploadUrl/${
+          e.target.files[0].name.split(".")[1]
+        }`
+      );
+      setUrl(data.link);
+    } else {
+      setErrors({ ...errors, image: true });
+      e.target.value = null;
+    }
+  };
 
-  const handleChange = (e) => {setState({...state,[e.target.name]: e.target.value,});};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.put(url, state.image, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
-  const handleSubmit = async(e)=>{
-      e.preventDefault();
-      var bodyFormData = new FormData();
-      bodyFormData.append('image', state.image);
-      bodyFormData.set("name",state.name)
-      bodyFormData.set("price",state.price)
-      bodyFormData.set("unit",state.unit)
-      bodyFormData.set("category",state.category)
-      const {data} = await axios.post("http://localhost:5000/item/addItem/",bodyFormData)
-      if (data.status===201) {
-        toast.success("Item added succsesfully")
-        closeModal()
-        history.push('/')
-      }
-  }
+    const data = await axios.post(
+      `https://8juechbwt9.execute-api.eu-south-1.amazonaws.com/dev/addItem/${
+        state.name
+      }/${state.price}/${state.unit}/${state.category}?url=${url.split("?")[0]}`
+    );
+    if (data.status === 201) {
+      toast.success("Item added succsesfully");
+      closeModal();
+      history.push("/");
+    }
+  };
 
   return (
     <Modal
@@ -63,44 +148,118 @@ export const ModalItem = ({modalIsOpen,closeModal,categories}) => {
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputEmail4">Name</label>
+            <label
+              style={
+                errors.name === true
+                  ? { visibility: "visible", fontSize: "14px" }
+                  : { visibility: "hidden" }
+              }
+              className="ml-3 text-danger"
+            >
+              Must contain only characters
+            </label>
             <input
+              style={
+                errors.name === true
+                  ? {
+                      border: "solid 1px red",
+                      boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                    }
+                  : {}
+              }
               name="name"
               onChange={handleChange}
               type="text"
               class="form-control"
               id="inputEmail4"
+              value={state.name}
             />
           </div>
         </div>
         <div class="form-group">
           <label for="inputAddress">Image</label>
+          <label
+            style={
+              errors.image === true
+                ? { visibility: "visible", fontSize: "14px" }
+                : { visibility: "hidden" }
+            }
+            className="ml-3 text-danger"
+          >
+            Make sure the document is an image!
+          </label>
           <input
+            accept="image/*"
             name="image"
-            onChange={e=>setState({...state,image:e.target.files[0]})}
+            onChange={handleImage}
             type="file"
             class="form-control"
             id="inputAddress"
+            style={
+              errors.image === true
+                ? {
+                    border: "solid 1px red",
+                    boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                  }
+                : {}
+            }
           />
         </div>
         <div class="form-row">
           <div class="form-group col-md-5">
             <label for="inputCity">Price</label>
+            <label
+              style={
+                errors.price === true
+                  ? { visibility: "visible", fontSize: "14px" }
+                  : { visibility: "hidden" }
+              }
+              className="ml-3 text-danger"
+            >
+              Must be a number
+            </label>
             <input
               name="price"
               onChange={handleChange}
-              type="number"
+              type="text"
               class="form-control"
               id="inputCity"
+              style={
+                errors.price === true
+                  ? {
+                      border: "solid 1px red",
+                      boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                    }
+                  : {}
+              }
             />
           </div>
           <div class="form-group col-md-5">
             <label for="inputCity">Unit</label>
+            <label
+              style={
+                errors.unit === true
+                  ? { visibility: "visible", fontSize: "14px" }
+                  : { visibility: "hidden" }
+              }
+              className="ml-3 text-danger"
+            >
+              Must be a number
+            </label>
             <input
               name="unit"
               onChange={handleChange}
-              type="number"
+              type="text"
               class="form-control"
               id="inputCity"
+              style={
+                errors.unit === true
+                  ? {
+                      border: "solid 1px red",
+                      boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                    }
+                  : {}
+              }
             />
           </div>
           <div class="form-group col-md-4">
@@ -112,21 +271,27 @@ export const ModalItem = ({modalIsOpen,closeModal,categories}) => {
               class="form-control"
             >
               {categories.map((category, index) => {
-                return <option  value={category._id} key={index}>{category.names[0]}</option>;
+                return (
+                  <option value={category._id} key={index}>
+                    {category.name}
+                  </option>
+                );
               })}
             </select>
           </div>
         </div>
         <div className="row justify-content-between col-md-5">
-        <button type="submit" class="btn btn-success">
-          Submit
-        </button>
-        <button 
-        className="btn btn-danger align-self-end"
-        onClick={()=>{closeModal()}}
-        >
-          Close
-        </button>
+          <button type="submit" class="btn btn-success">
+            Submit
+          </button>
+          <button
+            className="btn btn-danger align-self-end"
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            Close
+          </button>
         </div>
       </form>
     </Modal>

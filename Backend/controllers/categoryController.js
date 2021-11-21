@@ -3,12 +3,13 @@ const Categorie = require('../model/Categorie');
 var ObjectId = require('mongoose').Types.ObjectId;
 
 
-exports.getAllCategory= async (req,res)=>{
+exports.getAllCategory= async (req,res,cb)=>{
+    cb(null, {"statusCode": 200, "body": "results"})
     try {
         const allCategories = await Categorie.find()
-        allCategories ? res.send(allCategories) : res.send("There isnt a category , would you like to add one ?");
+        allCategories ? res.send("allCategories") : res.send("There isnt a category , would you like to add one ?");
     } catch (error) {
-        res.send(error)
+        res.send("s")
     }
 }
 
@@ -17,7 +18,7 @@ exports.addCategory= async (req,res)=>{
         if (!/[^a-zA-Z]+$/.test(req.body.names)) {
             const newCategorie = await Categorie.create({
                 names: req.body.names, 
-                images:"http://localhost:5000/"+req.file.path})
+                images:"https://tahir-bucket-images.s3.eu-south-1.amazonaws.com/1637271979471.png"})
             res.send(newCategorie)
             }
         else {

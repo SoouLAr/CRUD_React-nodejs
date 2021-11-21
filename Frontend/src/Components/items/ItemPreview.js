@@ -2,24 +2,41 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { ItemDetails } from "../item-details/itemDetails";
+import ReactLoading from "react-loading";
+import toast from "react-hot-toast";
 
-export const ItemPreview = ()=>{
-    const {_id} = useParams();
-    const [item,setItem]=useState({})
-    const fetchItem = async ()=>{
-        try{
-        const {data} = await axios.get(`http://localhost:5000/item/getItem/${_id}`)
-        setItem(data)
+export const ItemPreview = () => {
+  const { _id } = useParams();
+  const [item, setItem] = useState({});
+  const [isLoading,setIsLoading]=useState(true)
+  const fetchItem = async () => {
+    try {
+        setIsLoading(true)
+      const { data } = await axios.get(
+        `https://94x6a3w8cb.execute-api.eu-south-1.amazonaws.com/dev/findItemByID/${_id}`
+      );
+      setItem(data.body);
+      setIsLoading(false)
+    } catch (error) {
+        setIsLoading(true)
+        toast.error("Something went wrong!")
+      console.log(error);
     }
-        catch(error){
-            console.log(error);
-        }
-    }
-    useEffect(()=>{
-        fetchItem()
-        // eslint-disable-next-line
-    },[_id])
-    return(
-        <ItemDetails item={item} />
-    )
-}
+  };
+  useEffect(() => {
+    fetchItem();
+  }, [_id]);
+  if (isLoading === true ) {
+    return (
+      <ReactLoading
+        className="loader"
+        type="spinningBubbles"
+        color="red"
+        height="150px"
+        width="150px"
+      />
+    );
+  } else {
+    return <ItemDetails item={item} />;
+  }
+};

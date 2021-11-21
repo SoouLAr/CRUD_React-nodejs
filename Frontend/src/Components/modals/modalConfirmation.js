@@ -30,7 +30,7 @@ export const ModalConfirmation = ({ setModalConfirmationOpen, modalConfimationOp
       <div className="w-80 d-flex justify-content-between mt-4">
         <div 
             className="btn btn-danger"
-            onClick={()=>{handleDelete(id)}}
+            onClick={()=>{handleDelete(id); setModalConfirmationOpen(false)}}
         >Delete</div>
         <div
             className="btn btn-primary right"

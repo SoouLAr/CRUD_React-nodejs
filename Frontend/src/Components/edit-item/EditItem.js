@@ -4,34 +4,86 @@ import { useHistory, useParams } from "react-router";
 import { toast } from "react-hot-toast";
 import "../edit-item/EditItem.css"
 
+const initialErrors={
+  name:false,
+  unit:false,
+  price:false
+}
+
 export const EditItem = ({categories}) => {
   const { id } = useParams();
   const history = useHistory();
   const [item, setItem] = useState({});
+  const [errors, setErrors] = useState(initialErrors);
   const fetchitem = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/item/getItem/${id}`
+      `https://94x6a3w8cb.execute-api.eu-south-1.amazonaws.com/dev/findItemByID/${id}`
     );
-    setItem(data);
+    setItem(data.body);
   };
   const handleChange = (e) => {
-    setItem({
-      ...item,
-      [e.target.name]: e.target.value,
-    });
+    switch (e.target.name) {
+      case "name":
+        // Checks if the name will be empty and place it
+        if (e.target.value === "") {
+          setItem({ ...item, name: e.target.value });
+          setErrors({ ...errors, name: false });
+          break;
+        }
+        // Check if the name contains symbols or numbers
+        if (/^[A-Za-z]+$/.test(e.target.value)) {
+          setItem({ ...item, name: e.target.value });
+          e.target.value !== ""
+            ? setErrors({ ...errors, name: false })
+            : setErrors({ ...errors, name: true });
+        } else {
+          setItem({ ...item, name: e.target.value });
+          setErrors({ ...errors, name: true });
+        }
+        break;
+        case "unit":
+          if(e.target.value===""){
+            setErrors({...errors,unit:false})
+            break;
+          }
+          if (/^[1-9]+$/.test(e.target.value)){
+            setItem({...item,unit:e.target.value})
+            setErrors({...errors,unit: false})
+          } else {
+            setErrors({...errors,unit:true})
+            setItem({...item,unit:e.target.value})
+          }
+        break;
+        case "price":
+          if(e.target.value===""){
+            setErrors({...errors,price:false})
+            break;
+          }
+          if (/^[1-9]+$/.test(e.target.value)){
+            setItem({...item,price:e.target.value})
+            setErrors({...errors,price: false})
+          } else {
+            setErrors({...errors,price:true})
+            setItem({...item,price:e.target.value})
+          }
+        break;
+        case "category":
+          setItem({...item,category:e.target.value})
+    }
   };
   
 
   const updateItem = async (e) => {
     e.preventDefault();
+    if(errors.name===false && errors.price===false && errors.unit===false){
     const itemUpdated = await axios.patch(
-      `http://localhost:5000/item/updateItem/${id}`,
-      item
+      `https://2xw125ghwk.execute-api.eu-south-1.amazonaws.com/dev/updateItem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`
     );
-
-    if (itemUpdated.status === 200) {
+    if (itemUpdated.status === 201) {
       toast.success("Item updated succesfully");
       history.push("/");
+    }}else{
+      toast.error("Please change your inputs")
     }
   };
   useEffect(() => {
@@ -44,32 +96,86 @@ export const EditItem = ({categories}) => {
       <form onSubmit={updateItem}>
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
+          <label
+            style={
+              errors.name === true
+                ? { visibility: "visible", fontSize: "14px" }
+                : { visibility: "hidden" }
+            }
+            className="ml-3 text-danger"
+          >
+            Must contain only characters
+          </label>
           <input
             value={item.name}
             name="name"
             type="text"
             class="form-control"
             onChange={handleChange}
+            style={
+              errors.name === true
+                ? {
+                    border: "solid 1px red",
+                    boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                  }
+                : {}
+            }
           />
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Price</label>
+          <label
+            style={
+              errors.price === true
+                ? { visibility: "visible", fontSize: "14px" }
+                : { visibility: "hidden" }
+            }
+            className="ml-3 text-danger"
+          >
+                        Must be a number
+          </label>
           <input
             value={item.price}
             name="price"
-            type="number"
+            type="text"
             class="form-control"
             onChange={handleChange}
+            style={
+              errors.price === true
+                ? {
+                    border: "solid 1px red",
+                    boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                  }
+                : {}
+            }
           />
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Unit</label>
+          <label
+            style={
+              errors.unit === true
+                ? { visibility: "visible", fontSize: "14px" }
+                : { visibility: "hidden" }
+            }
+            className="ml-3 text-danger"
+          >
+            Must be a number
+          </label>
           <input
             value={item.unit}
             name="unit"
-            type="number"
+            type="text"
             class="form-control"
             onChange={handleChange}
+            style={
+              errors.unit === true
+                ? {
+                    border: "solid 1px red",
+                    boxShadow: "0 0 0 .2rem rgba(255,0,0,.25)",
+                  }
+                : {}
+            }
           />
         </div>
         <div className="select_input">
@@ -82,7 +188,7 @@ export const EditItem = ({categories}) => {
           >
             {categories.map((category) => (
               <option key={category._id} value={category._id}>
-                {category.names}
+                {category.name}
               </option>
             ))}
           </select>

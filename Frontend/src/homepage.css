@@ -144,3 +144,7 @@
 .modal__open:active{
     transform: translateY(5px);
 }
+
+.loader{
+    margin:150px auto;
+}

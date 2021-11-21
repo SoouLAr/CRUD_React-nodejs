@@ -41,8 +41,8 @@ function HomePage() {
   };
 
   const fetchCategories = async () => {
-    const { data } = await axios.get("http://127.0.0.1:5000/category");
-    setCategories(data);
+    const {data}  = await axios.get("https://njfgs7ep32.execute-api.eu-south-1.amazonaws.com/dev/getCategories");
+    setCategories(data.categories);
   };
 
   useEffect(() => {
@@ -97,6 +97,7 @@ function HomePage() {
           <Route  path="/items/:_id">
             <ItemPreview />
           </Route>
+
           <Route path="*" component={NotFound} />
         </Switch>
         <ModalItem
