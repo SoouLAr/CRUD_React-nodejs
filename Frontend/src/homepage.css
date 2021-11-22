@@ -151,6 +151,9 @@
 
 .upper-top{
     position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
     width: 100vw;
     height: 100vw;

@@ -94,7 +94,7 @@ export const ModalCategory = ({
     >
       <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
       <ReactLoading
-        className="loader"
+        className="upper-top"
         type="spinningBubbles"
         color="red"
         height="150px"

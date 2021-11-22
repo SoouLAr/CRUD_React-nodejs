@@ -22,7 +22,7 @@ export const ItemDetails=({item})=>{
         <div className="item-details">
             <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
       <ReactLoading
-        className="itemDelete"
+        className="upper-top"
         type="spinningBubbles"
         color="red"
         height="150px"

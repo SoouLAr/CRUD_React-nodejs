@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { toast } from "react-hot-toast";
+import ReactLoading from "react-loading";
 import "../edit-item/EditItem.css"
 
 const initialErrors={
@@ -11,10 +12,11 @@ const initialErrors={
 }
 
 export const EditItem = ({categories}) => {
-  const { id } = useParams();
-  const history = useHistory();
-  const [item, setItem] = useState({});
-  const [errors, setErrors] = useState(initialErrors);
+  const { id } = useParams()
+  const history = useHistory()
+  const [item, setItem] = useState({})
+  const [errors, setErrors] = useState(initialErrors)
+  const [isUploading,setIsUploading] = useState(false)
   const fetchitem = async () => {
     const { data } = await axios.get(
       `https://94x6a3w8cb.execute-api.eu-south-1.amazonaws.com/dev/findItemByID/${id}`
@@ -76,10 +78,12 @@ export const EditItem = ({categories}) => {
   const updateItem = async (e) => {
     e.preventDefault();
     if(errors.name===false && errors.price===false && errors.unit===false){
+      setIsUploading(true)
     const itemUpdated = await axios.patch(
       `https://2xw125ghwk.execute-api.eu-south-1.amazonaws.com/dev/updateItem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`
     );
     if (itemUpdated.status === 201) {
+      setIsUploading(false)
       toast.success("Item updated succesfully");
       history.push("/");
     }}else{
@@ -93,6 +97,14 @@ export const EditItem = ({categories}) => {
 
   return (
     <div className="input_form">
+      <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
+      <ReactLoading
+        className="upper-top"
+        type="spinningBubbles"
+        color="red"
+        height="150px"
+        width="150px"
+      /></div>
       <form onSubmit={updateItem}>
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
