@@ -1,6 +1,8 @@
 .categories{
+    position: relative;
     flex:0 0 30%;
     padding-top: 20px;
+    overflow: visible;
 }
 
 .category__item{

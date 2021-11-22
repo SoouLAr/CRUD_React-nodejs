@@ -1,21 +1,33 @@
 import axios from 'axios'
-import {React} from 'react'
+import React,{useState} from 'react'
 import {Link} from 'react-router-dom'
 import { useHistory } from 'react-router'
+import ReactLoading from "react-loading";
 import './itemDetails.css'
 
 
 export const ItemDetails=({item})=>{
     const history = useHistory()
+  const [isUploading,setIsUploading] = useState(false)
     const handleDelete = async ()=>{
+        setIsUploading(true)
         const data = await axios.delete(`https://6vy0y6749g.execute-api.eu-south-1.amazonaws.com/dev/deleteItem/${item._id}`)
         if (data.status === 200){
+            setIsUploading(false)
             history.push("/")
         }
     }
 
     return (
         <div className="item-details">
+            <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
+      <ReactLoading
+        className="itemDelete"
+        type="spinningBubbles"
+        color="red"
+        height="150px"
+        width="150px"
+      /></div>
             <div className="image">
                 <img height="100%" width="100%" src={item.image} alt="" />
             </div>

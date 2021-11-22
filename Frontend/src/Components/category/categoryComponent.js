@@ -4,14 +4,17 @@ import axios from 'axios'
 import "../carousel/carousel.css";
 import toast from "react-hot-toast";
 import {ModalConfirmation} from '../modals/modalConfirmation'
+import ReactLoading from "react-loading";
 
-export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,categoryAdded}) => {
+
+export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,categoryAdded,setIsDeleted}) => {
   const [modalConfimationOpen, setModalConfirmationOpen] = useState(false);
 
   const handleDelete = async (id)=>{
-    
+    setIsDeleted(true)
     const {status} = await axios.delete(`https://iy9sfrvm61.execute-api.eu-south-1.amazonaws.com/dev/deleteCategory/${id}`)
     if (status===200){
+      setIsDeleted(false)
     toast.success("category deleted successfully!")
     setCategoryAdded(categoryAdded+1)}
      else {toast.error("Catgory didn't delete!")}

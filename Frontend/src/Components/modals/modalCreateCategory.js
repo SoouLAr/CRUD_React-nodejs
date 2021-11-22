@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
-import "./modalItem.css";
+import ReactLoading from "react-loading";
+
 
 const customStyles = {
   content: {
@@ -39,7 +40,7 @@ export const ModalCategory = ({
   const [category, setCategory] = useState(initialState);
   const [postUrl, setPostUrl] = useState("");
   const [errors, setErrors] = useState(initialErrors);
-
+  const [isUploading,setIsUploading] = useState(false)
   const handleChange = async (e) => {
     if (e.target.files[0].type.startsWith("image/")) {
       setCategory({ ...category, image: e.target.files[0] });
@@ -59,6 +60,7 @@ export const ModalCategory = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (errors.names === false && errors.images === false) {
+      setIsUploading(true)
       await axios.put(postUrl, category.image, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -70,6 +72,7 @@ export const ModalCategory = ({
         }?url=${postUrl.split("?")[0]}`
       );
       if (data.status === 201) {
+        setIsUploading(false)
         setCategory(initialState);
         toast.success("Added successfully");
         closeModal();
@@ -89,6 +92,14 @@ export const ModalCategory = ({
       style={customStyles}
       contentLabel="Example Modal"
     >
+      <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
+      <ReactLoading
+        className="loader"
+        type="spinningBubbles"
+        color="red"
+        height="150px"
+        width="150px"
+      /></div>
       <form onSubmit={handleSubmit}>
         <div class="form-row">
           <div class="form-group col-md-6">

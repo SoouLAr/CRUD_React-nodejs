@@ -14,6 +14,7 @@ import { Header } from "./Components/header/Header";
 import {ContactUs} from './Components/contact-us/ContactUs'
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
 import { NotFound } from "./Components/not-found/NotFound";
+import ReactLoading from "react-loading";
 import "./homepage.css";
 
 function HomePage() {
@@ -25,6 +26,8 @@ function HomePage() {
   const [didCategoryChange, setDidCategoryChange] = useState(false);
   const [itemModal,setItemModal]=useState(true)
   const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
+  const [isItemAdded,setisItemAdded]=useState(false)
+  const [isDeleted,setIsDeleted] = useState(false)
   const viewidth =
     document.documentElement.clientWidth < 640
       ? 1
@@ -64,10 +67,19 @@ function HomePage() {
       <div className="bodyMix bg-light">
         <div className="categories">
           <h2 className="category__header"> Categories</h2>
+          <div style={isDeleted? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
+      <ReactLoading
+        className="loader"
+        type="spinningBubbles"
+        color="red"
+        height="150px"
+        width="150px"
+      /></div>
           <Slider {...settings}>
             {categories.map((item) => {
               return (
                 <CategoryComponent
+                setIsDeleted={setIsDeleted}
                   categoryAdded={categoryAdded}
                   setCategoryAdded={setCategoryAdded}
                   didCategoryChange
@@ -83,7 +95,7 @@ function HomePage() {
         </div>
         <Switch>
           <Route exact path="/">
-            <Item ItemComponent={ItemComponent} />
+            <Item isItemAdded={isItemAdded} ItemComponent={ItemComponent} />
           </Route>
           <Route path="/contactUs">
             <ContactUs />
@@ -97,7 +109,6 @@ function HomePage() {
           <Route  path="/items/:_id">
             <ItemPreview />
           </Route>
-
           <Route path="*" component={NotFound} />
         </Switch>
         <ModalItem
@@ -108,6 +119,8 @@ function HomePage() {
           ariaHideApp={false}
           errors={errors}
           setErrors={setErrors}
+          setisItemAdded={setisItemAdded}
+          isItemAdded={isItemAdded}
         />
         <ModalCategory
           categoryAdded={categoryAdded}

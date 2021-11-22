@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
-import "./modalItem.css";
+import ReactLoading from "react-loading";
+
 
 const customStyles = {
   content: {
@@ -28,7 +29,7 @@ export const initialErrors = {
   category: undefined,
 };
 
-export const ModalItem = ({ modalIsOpen, closeModal, categories }) => {
+export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,setisItemAdded }) => {
   Modal.setAppElement("#root");
   const history = useHistory();
   const initialState = {
@@ -48,6 +49,7 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories }) => {
   const [url, setUrl] = useState("");
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState(initialErrors);
+  const [isUploading,setIsUploading] = useState(false)
 
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -119,21 +121,22 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsUploading(true)
     const response = await axios.put(url, state.image, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
     const data = await axios.post(
       `https://8juechbwt9.execute-api.eu-south-1.amazonaws.com/dev/addItem/${
         state.name
       }/${state.price}/${state.unit}/${state.category}?url=${url.split("?")[0]}`
     );
     if (data.status === 201) {
+      setIsUploading(false)
       toast.success("Item added succsesfully");
       closeModal();
-      history.push("/");
+      setisItemAdded(!isItemAdded)
     }
   };
 
@@ -144,6 +147,14 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories }) => {
       style={customStyles}
       contentLabel="Example Modal"
     >
+            <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
+      <ReactLoading
+        className="loader"
+        type="spinningBubbles"
+        color="red"
+        height="150px"
+        width="150px"
+      /></div>
       <form onSubmit={handleSubmit}>
         <div class="form-row">
           <div class="form-group col-md-6">
