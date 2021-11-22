@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { toast } from "react-hot-toast";
 import ReactLoading from "react-loading";
-import "../edit-item/EditItem.css"
+import "../edit-item/EditItem.css";
 
 const initialErrors={
   name:false,
