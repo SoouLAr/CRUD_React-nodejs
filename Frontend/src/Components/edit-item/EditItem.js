@@ -48,7 +48,7 @@ export const EditItem = ({categories}) => {
             setErrors({...errors,unit:false})
             break;
           }
-          if (/^[1-9]+$/.test(e.target.value)){
+          if (/^[1-90]+$/.test(e.target.value)){
             setItem({...item,unit:e.target.value})
             setErrors({...errors,unit: false})
           } else {
@@ -61,7 +61,7 @@ export const EditItem = ({categories}) => {
             setErrors({...errors,price:false})
             break;
           }
-          if (/^[1-9]+$/.test(e.target.value)){
+          if (/^[1-90]+$/.test(e.target.value)){
             setItem({...item,price:e.target.value})
             setErrors({...errors,price: false})
           } else {
