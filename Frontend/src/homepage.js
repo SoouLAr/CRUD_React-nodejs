@@ -15,6 +15,7 @@ import {ContactUs} from './Components/contact-us/ContactUs'
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
 import { NotFound } from "./Components/not-found/NotFound";
 import { ModalLoginSignUp } from "./Components/modals/modalLoginSignUp";
+import {ModalLogIn} from './Components/modals/modalLogIn'
 import ReactLoading from "react-loading";
 import "./homepage.css";
 
@@ -27,6 +28,7 @@ function HomePage() {
   const [didCategoryChange, setDidCategoryChange] = useState(false);
   const [itemModal,setItemModal]=useState(true)
   const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
+  const [modalLogin,setModalLogin]=useState(false)
   const [logininSignUp,setLoginSignUp]=useState(false)
   const [isItemAdded,setisItemAdded]=useState(false)
   const [isDeleted,setIsDeleted] = useState(false)
@@ -65,7 +67,7 @@ function HomePage() {
         isSuccesCreatedItem={isSuccesCreatedItem}
         setIsSuccesCreatedItem={setIsSuccesCreatedItem}
         setCategories={setCategories}
-        setLogininmodal={setLoginSignUp}
+        setLogininmodal={setModalLogin}
       />
       <div className="bodyMix bg-light">
         <div className="categories">
@@ -136,6 +138,12 @@ function HomePage() {
         <ModalLoginSignUp
           closeModal={()=>setLoginSignUp(false)}
           modalisOpen={logininSignUp}
+          openLogin={setModalLogin}
+        />
+        <ModalLogIn 
+        modalIsOpen = {modalLogin}
+        closeModal={setModalLogin}
+        setLoginSignUp={setLoginSignUp}
         />
       </div>
     </div>
