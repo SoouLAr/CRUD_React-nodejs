@@ -12,7 +12,7 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
 
   const handleDelete = async (id)=>{
     setIsDeleted(true)
-    const {status} = await axios.delete(`https://iy9sfrvm61.execute-api.eu-south-1.amazonaws.com/dev/deleteCategory/${id}`)
+    const {status} = await axios.delete(`https://iy9sfrvm61.execute-api.eu-south-1.amazonaws.com/dev/deleteCategory/${id}`,{headers:{"Auth":localStorage.getItem('idToken')}})
     if (status===200){
       setIsDeleted(false)
     toast.success("category deleted successfully!")
@@ -40,10 +40,10 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
             class="info" to={`/category/${item._id}`}>
             link here
           </Link>
-          <i  
+          {localStorage.getItem("idToken") && <i  
           // onClick={()=>{handleDelete(item._id)}}
           onClick={()=>{setModalConfirmationOpen(true)}}
-          class="bi bi-archive info delete-icon"></i>
+          class="bi bi-archive info delete-icon"></i>}
         </div>
       </div>
       <ModalConfirmation

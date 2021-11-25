@@ -41,6 +41,7 @@ export const ModalCategory = ({
   const [postUrl, setPostUrl] = useState("");
   const [errors, setErrors] = useState(initialErrors);
   const [isUploading,setIsUploading] = useState(false)
+  
   const handleChange = async (e) => {
     if (e.target.files[0].type.startsWith("image/")) {
       setCategory({ ...category, image: e.target.files[0] });
@@ -66,23 +67,25 @@ export const ModalCategory = ({
           "Content-Type": "multipart/form-data",
         },
       });
-      const data = await axios.post(
-        `https://h05yrcqc6a.execute-api.eu-south-1.amazonaws.com/dev/addCategory/${
-          category.names
-        }?url=${postUrl.split("?")[0]}`
-      );
-      if (data.status === 201) {
-        setIsUploading(false)
-        setCategory(initialState);
-        toast.success("Added successfully");
-        closeModal();
-        history.push("/");
-        setCategoryAdded(categoryAdded + 1);
-        setErrors(initialErrors);
+      try {
+        const data = await axios.post(
+          `https://h05yrcqc6a.execute-api.eu-south-1.amazonaws.com/dev/addCategory/${
+            category.names
+          }?url=${postUrl.split("?")[0]}`,null,{headers:{"Access-Control-Allow-Origin":'*',"Authorization":localStorage.getItem('idToken')}}
+        );
+        if (data.status === 201) {
+          setIsUploading(false)
+          setCategory(initialState);
+          toast.success("Added successfully");
+          closeModal();
+          history.push("/");
+          setCategoryAdded(categoryAdded + 1);
+          setErrors(initialErrors);
+        }
+      } catch (error) {
+          toast.error("Please complete the form correctly"); 
       }
-    } else {
-      toast.error("Please complete the form correctly");
-    }
+    } 
   };
 
   return (

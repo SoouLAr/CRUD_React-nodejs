@@ -45,7 +45,8 @@ export const EditItem = ({categories}) => {
         break;
         case "unit":
           if(e.target.value===""){
-            setErrors({...errors,unit:false})
+            setItem({...item,unit:e.target.value})
+            setErrors({...errors,unit:true})
             break;
           }
           if (/^[1-90]+$/.test(e.target.value)){
@@ -58,7 +59,8 @@ export const EditItem = ({categories}) => {
         break;
         case "price":
           if(e.target.value===""){
-            setErrors({...errors,price:false})
+            setItem({...item,price:e.target.value})
+            setErrors({...errors,price:true})
             break;
           }
           if (/^[1-90]+$/.test(e.target.value)){
@@ -80,8 +82,7 @@ export const EditItem = ({categories}) => {
     if(errors.name===false && errors.price===false && errors.unit===false){
       setIsUploading(true)
     const itemUpdated = await axios.patch(
-      `https://2xw125ghwk.execute-api.eu-south-1.amazonaws.com/dev/updateItem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`
-    );
+      `https://2xw125ghwk.execute-api.eu-south-1.amazonaws.com/dev/updateItem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`,null,{headers:{"Access-Control-Allow-Origin":'*',"Authorization":localStorage.getItem('idToken')}});
     if (itemUpdated.status === 201) {
       setIsUploading(false)
       toast.success("Item updated succesfully");
@@ -194,7 +195,7 @@ export const EditItem = ({categories}) => {
           <p className="input_label">Category</p>
           <select
             name="category"
-            className="form-control ml-4 "
+            className="form-control"
             value={item.category}
             onChange={handleChange}
           >

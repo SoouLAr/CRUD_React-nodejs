@@ -14,6 +14,7 @@ import { Header } from "./Components/header/Header";
 import {ContactUs} from './Components/contact-us/ContactUs'
 import { ModalCategory } from "./Components/modals/modalCreateCategory";
 import { NotFound } from "./Components/not-found/NotFound";
+import { ModalLoginSignUp } from "./Components/modals/modalLoginSignUp";
 import ReactLoading from "react-loading";
 import "./homepage.css";
 
@@ -26,6 +27,7 @@ function HomePage() {
   const [didCategoryChange, setDidCategoryChange] = useState(false);
   const [itemModal,setItemModal]=useState(true)
   const [modalCategoryOpen, setModalCategoryOpen] = useState(false);
+  const [logininSignUp,setLoginSignUp]=useState(false)
   const [isItemAdded,setisItemAdded]=useState(false)
   const [isDeleted,setIsDeleted] = useState(false)
   const viewidth =
@@ -63,6 +65,7 @@ function HomePage() {
         isSuccesCreatedItem={isSuccesCreatedItem}
         setIsSuccesCreatedItem={setIsSuccesCreatedItem}
         setCategories={setCategories}
+        setLogininmodal={setLoginSignUp}
       />
       <div className="bodyMix bg-light">
         <div className="categories">
@@ -129,6 +132,10 @@ function HomePage() {
           modalCategoryOpen={modalCategoryOpen}
           closeModal={() => setModalCategoryOpen(false)}
           ariaHideApp={false}
+        />
+        <ModalLoginSignUp
+          closeModal={()=>setLoginSignUp(false)}
+          modalisOpen={logininSignUp}
         />
       </div>
     </div>

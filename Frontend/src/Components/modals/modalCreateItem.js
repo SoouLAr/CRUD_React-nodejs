@@ -76,7 +76,7 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
             setErrors({...errors,unit:false})
             break;
           }
-          if (/^[1-9]+$/.test(e.target.value)){
+          if (/^[1-90]+$/.test(e.target.value)){
             setState({...state,unit:e.target.value})
             setErrors({...errors,unit: false})
           } else {
@@ -89,7 +89,7 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
             setErrors({...errors,price:false})
             break;
           }
-          if (/^[1-9]+$/.test(e.target.value)){
+          if (/^[1-90]+$/.test(e.target.value)){
             setState({...state,price:e.target.value})
             setErrors({...errors,price: false})
           } else {
@@ -127,17 +127,22 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
         "Content-Type": "multipart/form-data",
       },
     });
-    const data = await axios.post(
-      `https://8juechbwt9.execute-api.eu-south-1.amazonaws.com/dev/addItem/${
-        state.name
-      }/${state.price}/${state.unit}/${state.category}?url=${url.split("?")[0]}`
-    );
-    if (data.status === 201) {
-      setIsUploading(false)
-      toast.success("Item added succsesfully");
-      closeModal();
-      setisItemAdded(!isItemAdded)
+    try {
+      const data = await axios.post(
+        `https://8juechbwt9.execute-api.eu-south-1.amazonaws.com/dev/addItem/${
+          state.name
+        }/${state.price}/${state.unit}/${state.category}?url=${url.split('?')[0]}`,null,{headers:{"Access-Control-Allow-Origin":'*',"Authorization":localStorage.getItem('idToken')}}
+      );
+      if (data.status === 201) {
+        setIsUploading(false)
+        toast.success("Item added succsesfully");
+        closeModal();
+        setisItemAdded(!isItemAdded)
+      }
+    } catch (error) {
+        toast.error("Item didn't get added")
     }
+    
   };
 
   return (

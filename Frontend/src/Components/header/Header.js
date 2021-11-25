@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
-export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModalCategoryOpen }) => {
+export const Header = ({ setIsOpen, setIsSuccesCreatedItem, setItemModal, setModalCategoryOpen, setLogininmodal }) => {
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <Link
@@ -20,7 +21,7 @@ export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModal
               Contact Us
             </Link>
           </li>
-          <li class="nav-item">
+          {localStorage.getItem('idToken') && <li class="nav-item">
             <div
               style={{cursor:"pointer"}}
               class="nav-link"
@@ -32,8 +33,8 @@ export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModal
             >
               Add Item
             </div>
-          </li>
-          <li class="nav-item">
+          </li>}
+          {localStorage.getItem('idToken') && <li class="nav-item">
             <div 
             style={{cursor:"pointer"}}
             onClick={()=>{
@@ -44,12 +45,34 @@ export const Header = ({ setIsOpen, setIsSuccesCreatedItem,setItemModal,setModal
             >
               Add Category
             </div>
-          </li>
+          </li>}
           <li class="nav-item" >
             <Link to="/about" class="nav-link">About</Link>
           </li>
         </ul>
       </div>
+      {localStorage.getItem('idToken')?
+        <div 
+        style={{cursor:"pointer"}}
+        onClick={()=>{
+          setLogininmodal(true)
+        }}
+        class="nav-link" 
+        to="/s"
+        >
+          {jwt_decode(localStorage.getItem('idToken'))["cognito:username"]}
+        </div>
+       :
+       <div 
+            style={{cursor:"pointer"}}
+            onClick={()=>{
+              setLogininmodal(true)
+            }}
+            class="nav-link" 
+            to="/s"
+            >
+              Login/Sign Up
+            </div>}
     </nav>
   );
 };
