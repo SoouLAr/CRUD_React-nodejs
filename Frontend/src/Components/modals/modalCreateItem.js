@@ -312,4 +312,4 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
       </form>
     </Modal>
   );
-};
+}
