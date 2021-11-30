@@ -21,6 +21,7 @@ const customStyles = {
 };
 export const ModalLogIn = ({ modalIsOpen,closeModal,setLoginSignUp}) => {
   Modal.setAppElement("#root");
+  const [passwordError,setPasswordError]=useState(false)
   const [user,setUser]=useState({
     username: "",
     password: ""
@@ -38,7 +39,10 @@ export const ModalLogIn = ({ modalIsOpen,closeModal,setLoginSignUp}) => {
     } 
 }
 const handleChange=(e)=>{
-    setUser({...user,[e.target.name]:e.target.value}) 
+    setUser({...user,[e.target.name]:e.target.value})
+    if(e.target.name==="password"){
+      setPasswordError(e.target.value.length<8)
+    }
 }
 
   return (
@@ -60,7 +64,7 @@ const handleChange=(e)=>{
               />
             </div>
             <div className="form-group ">
-              <label for="exampleInputPassword1">Password</label> {user.password.length<8 && <p className="d-inline  text-danger">Password too short</p>}
+              <label for="exampleInputPassword1">Password</label> {passwordError && <p className="d-inline  text-danger ml-2">Password too short</p>}
               <input
                 value={user.password}
                 name="password"
