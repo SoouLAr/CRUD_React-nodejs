@@ -140,10 +140,10 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
         setisItemAdded(!isItemAdded)
       }
     } catch (error) {
-        toast.error("Item didn't get added")
+        toast.error("Item didn't get added");
     }
     
-  };
+  };  
 
   return (
     <Modal
