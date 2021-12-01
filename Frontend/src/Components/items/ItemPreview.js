@@ -13,7 +13,7 @@ export const ItemPreview = () => {
     try {
         setIsLoading(true)
       const { data } = await axios.get(
-        `https://94x6a3w8cb.execute-api.eu-south-1.amazonaws.com/dev/findItemByID/${_id}`
+        ` https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/finditembyid/${_id}`
       );
       setItem(data.body);
       setIsLoading(false)

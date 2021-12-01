@@ -1,0 +1,75 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "tahir-updateItem-dev-app:app.updateItem (nodejs12.x)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/tahir-updateItem-dev-app",
+                "lambdaHandler": "app.updateItem"
+            },
+            "lambda": {
+                "runtime": "nodejs12.x",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "java",
+            "name": "Launch MyFrameWithComponents",
+            "request": "launch",
+            "mainClass": "MyFrameWithComponents",
+            "projectName": "c++_108c2aa4"
+        },
+        {
+            "type": "java",
+            "name": "Launch MyFrame",
+            "request": "launch",
+            "mainClass": "MyFrame",
+            "projectName": "c++_108c2aa4"
+        },
+        {
+            "type": "java",
+            "name": "Launch HelloWorld",
+            "request": "launch",
+            "mainClass": "HelloWorld",
+            "projectName": "c++_108c2aa4"
+        },
+        {
+            "name": "g++ - Build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: g++ build active file",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
+            "name": "C/C++ Runner: Debug Session",
+            "type": "cppdbg",
+            "request": "launch",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/tahir/Desktop/c++",
+            "environment": [],
+            "program": "/home/tahir/Desktop/c++/build/Debug/outDebug",
+            "internalConsoleOptions": "openOnSessionStart",
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb",
+            "externalConsole": false
+        }
+    ]
+}

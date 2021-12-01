@@ -108,7 +108,7 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
       setState({ ...state, image: e.target.files[0]});
       setErrors({ ...errors, image: false });
       const { data } = await axios.get(
-        `https://w3mjpdk90m.execute-api.eu-south-1.amazonaws.com/dev/getUploadUrl/${
+        `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/upload/getuploadurl/${
           e.target.files[0].name.split(".")[1]
         }`
       );
@@ -129,9 +129,9 @@ export const ModalItem = ({ modalIsOpen, closeModal, categories, isItemAdded,set
     });
     try {
       const data = await axios.post(
-        `https://8juechbwt9.execute-api.eu-south-1.amazonaws.com/dev/addItem/${
+        `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/additem/${
           state.name
-        }/${state.price}/${state.unit}/${state.category}?url=${url.split('?')[0]}`,null,{headers:{"Access-Control-Allow-Origin":'*',"Authorization":localStorage.getItem('idToken')}}
+        }/${state.price}/${state.unit}/${state.category}?url=${url.split('?')[0]}`,null,{headers:{"Authorization":localStorage.getItem('idToken')}}
       );
       if (data.status === 201) {
         setIsUploading(false)

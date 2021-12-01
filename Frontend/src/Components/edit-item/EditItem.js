@@ -5,21 +5,21 @@ import { toast } from "react-hot-toast";
 import ReactLoading from "react-loading";
 import "../edit-item/EditItem.css";
 
-const initialErrors={
-  name:false,
-  unit:false,
-  price:false
-}
+const initialErrors = {
+  name: false,
+  unit: false,
+  price: false,
+};
 
-export const EditItem = ({categories}) => {
-  const { id } = useParams()
-  const history = useHistory()
-  const [item, setItem] = useState({})
-  const [errors, setErrors] = useState(initialErrors)
-  const [isUploading,setIsUploading] = useState(false)
+export const EditItem = ({ categories }) => {
+  const { id } = useParams();
+  const history = useHistory();
+  const [item, setItem] = useState({});
+  const [errors, setErrors] = useState(initialErrors);
+  const [isUploading, setIsUploading] = useState(false);
   const fetchitem = async () => {
     const { data } = await axios.get(
-      `https://94x6a3w8cb.execute-api.eu-south-1.amazonaws.com/dev/findItemByID/${id}`
+      `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/finditembyid/${id}`
     );
     setItem(data.body);
   };
@@ -43,52 +43,61 @@ export const EditItem = ({categories}) => {
           setErrors({ ...errors, name: true });
         }
         break;
-        case "unit":
-          if(e.target.value===""){
-            setItem({...item,unit:e.target.value})
-            setErrors({...errors,unit:true})
-            break;
-          }
-          if (/^[1-90]+$/.test(e.target.value)){
-            setItem({...item,unit:e.target.value})
-            setErrors({...errors,unit: false})
-          } else {
-            setErrors({...errors,unit:true})
-            setItem({...item,unit:e.target.value})
-          }
+      case "unit":
+        if (e.target.value === "") {
+          setItem({ ...item, unit: e.target.value });
+          setErrors({ ...errors, unit: true });
+          break;
+        }
+        if (/^[1-90]+$/.test(e.target.value)) {
+          setItem({ ...item, unit: e.target.value });
+          setErrors({ ...errors, unit: false });
+        } else {
+          setErrors({ ...errors, unit: true });
+          setItem({ ...item, unit: e.target.value });
+        }
         break;
-        case "price":
-          if(e.target.value===""){
-            setItem({...item,price:e.target.value})
-            setErrors({...errors,price:true})
-            break;
-          }
-          if (/^[1-90]+$/.test(e.target.value)){
-            setItem({...item,price:e.target.value})
-            setErrors({...errors,price: false})
-          } else {
-            setErrors({...errors,price:true})
-            setItem({...item,price:e.target.value})
-          }
+      case "price":
+        if (e.target.value === "") {
+          setItem({ ...item, price: e.target.value });
+          setErrors({ ...errors, price: true });
+          break;
+        }
+        if (/^[1-90]+$/.test(e.target.value)) {
+          setItem({ ...item, price: e.target.value });
+          setErrors({ ...errors, price: false });
+        } else {
+          setErrors({ ...errors, price: true });
+          setItem({ ...item, price: e.target.value });
+        }
         break;
-        case "category":
-          setItem({...item,category:e.target.value})
+      case "category":
+        setItem({ ...item, category: e.target.value });
     }
   };
-  
 
   const updateItem = async (e) => {
-    e.preventDefault();
-    if(errors.name===false && errors.price===false && errors.unit===false){
-      setIsUploading(true)
-    const itemUpdated = await axios.patch(
-      `https://2xw125ghwk.execute-api.eu-south-1.amazonaws.com/dev/updateItem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`,null,{headers:{"Access-Control-Allow-Origin":'*',"Authorization":localStorage.getItem('idToken')}});
-    if (itemUpdated.status === 201) {
-      setIsUploading(false)
-      toast.success("Item updated succesfully");
-      history.push("/");
-    }}else{
-      toast.error("Please change your inputs")
+    try {
+      e.preventDefault();
+      if (
+        errors.name === false &&
+        errors.price === false &&
+        errors.unit === false
+      ) {
+        setIsUploading(true);
+        const itemUpdated = await axios.patch(
+          `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/updateitem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`,
+          null,
+          {headers:{"Authorization":localStorage.getItem('idToken')}}
+        );
+        if (itemUpdated.status === 201) {
+          setIsUploading(false);
+          toast.success("Item updated succesfully");
+          history.push("/");
+        }
+      }
+    } catch (error) {
+      toast.error("Please change your inputs");
     }
   };
   useEffect(() => {
@@ -98,14 +107,20 @@ export const EditItem = ({categories}) => {
 
   return (
     <div className="input_form">
-      <div style={isUploading? {visibility:"visible"} : {visibility:"hidden"}} className="upper-top">
-      <ReactLoading
+      <div
+        style={
+          isUploading ? { visibility: "visible" } : { visibility: "hidden" }
+        }
         className="upper-top"
-        type="spinningBubbles"
-        color="red"
-        height="150px"
-        width="150px"
-      /></div>
+      >
+        <ReactLoading
+          className="upper-top"
+          type="spinningBubbles"
+          color="red"
+          height="150px"
+          width="150px"
+        />
+      </div>
       <form onSubmit={updateItem}>
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
@@ -145,7 +160,7 @@ export const EditItem = ({categories}) => {
             }
             className="ml-3 text-danger"
           >
-                        Must be a number
+            Must be a number
           </label>
           <input
             value={item.price}

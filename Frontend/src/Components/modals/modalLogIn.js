@@ -29,7 +29,7 @@ export const ModalLogIn = ({ modalIsOpen,closeModal,setLoginSignUp}) => {
   const login = async (e)=>{
     e.preventDefault();
     try {
-        const response = await axios.get(`https://mpghr64d46.execute-api.eu-south-1.amazonaws.com/dev/login?username=${user.username}&password=${user.password}`)
+        const response = await axios.get(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/login?username=${user.username}&password=${user.password}`)
         localStorage.setItem('accesToken',response.data.message.accessToken)
         localStorage.setItem('idToken',response.data.message.idToken)
         localStorage.setItem('refreshToken',response.data.message.refreshToken)

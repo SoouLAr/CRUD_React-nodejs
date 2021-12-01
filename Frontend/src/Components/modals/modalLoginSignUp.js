@@ -68,8 +68,7 @@ export const ModalLoginSignUp = ({
     e.preventDefault()
     try {
       const response = await axios.get(
-        `https://vncxnflmg5.execute-api.eu-south-1.amazonaws.com/dev/getToken?username=${newUser.username}&email=${newUser.email}&password=${newUser.password}`,
-        { headers: { "Access-Control-Allow-Origin": "*" } }
+        `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/adduser?username=${newUser.username}&email=${newUser.email}&password=${newUser.password}`
       );
       if (response.status === 201) {
         setIsSigninUp(false)
@@ -81,7 +80,7 @@ export const ModalLoginSignUp = ({
 
   const approveCode = async ()=>{
     try {
-      const response = await axios.get(`https://eyrwkgdhtd.execute-api.eu-south-1.amazonaws.com/dev/confirmCode?username=${newUser.username}&code=${code}`)
+      const response = await axios.get(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/confirmcode?username=${newUser.username}&code=${code}`)
     if(response.status===201){
       toast.success("Verified.Now login!")
       closeModal()
@@ -95,10 +94,9 @@ export const ModalLoginSignUp = ({
 
   const sendCode = async()=>{
     try {
-      const response = await axios.get(`https://rkhd6s5iwj.execute-api.eu-south-1.amazonaws.com/dev/resendConfirmCode?username=${newUser.username}`)
-      console.log(response);
+      const response = await axios.get(` https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/resendconfirmationcode/?username=${newUser.username}`)
       if(response.status===200) toast.success('Check your email')
-      setIsSigninUp(true)
+      setIsSigninUp(false)
     } catch (error) {
       toast.error('Try again')
     }

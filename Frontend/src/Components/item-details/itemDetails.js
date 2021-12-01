@@ -9,14 +9,19 @@ export const ItemDetails = ({ item }) => {
   const history = useHistory();
   const [isUploading, setIsUploading] = useState(false);
   const handleDelete = async () => {
-    setIsUploading(true);
+    try {
+      setIsUploading(true);
     const data = await axios.delete(
-      `https://6vy0y6749g.execute-api.eu-south-1.amazonaws.com/dev/deleteItem/${item._id}`,{headers:{"Auth":localStorage.getItem('idToken')}}
+      `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/deleteitem/${item._id}`,{headers:{"Authorization":localStorage.getItem('idToken')}}
     );
     if (data.status === 200) {
       setIsUploading(false);
       history.push("/");
     }
+    } catch (error) {
+      setIsUploading(false)
+    }
+    
   };
 
   return (

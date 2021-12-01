@@ -12,7 +12,7 @@ export const ItemsByCategory = ({didCategoryChange})=>{
 
     const fetchItems = async ()=>{
       setIsLoading(true)
-        const {data}=await axios.get(`https://0rwn1n05kf.execute-api.eu-south-1.amazonaws.com/dev/getItemByCategory/${id}`)
+        const {data}=await axios.get(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/getitemsbycategory/${id}`)
         setItems(data.body)
         setIsLoading(false)
     }

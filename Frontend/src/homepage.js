@@ -48,7 +48,7 @@ function HomePage() {
   };
 
   const fetchCategories = async () => {
-    const {data}  = await axios.get("https://njfgs7ep32.execute-api.eu-south-1.amazonaws.com/dev/getCategories");
+    const {data}  = await axios.get("https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/category");
     setCategories(data.categories);
   };
 

@@ -11,13 +11,16 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
   const [modalConfimationOpen, setModalConfirmationOpen] = useState(false);
 
   const handleDelete = async (id)=>{
-    setIsDeleted(true)
-    const {status} = await axios.delete(`https://iy9sfrvm61.execute-api.eu-south-1.amazonaws.com/dev/deleteCategory/${id}`,{headers:{"Auth":localStorage.getItem('idToken')}})
+    try {
+      setIsDeleted(true)
+    const {status} = await axios.delete(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/category/deletecategory/${id}`,{headers:{"Authorization":localStorage.getItem('idToken')}})
     if (status===200){
       setIsDeleted(false)
-    toast.success("category deleted successfully!")
-    setCategoryAdded(categoryAdded+1)}
-     else {toast.error("Catgory didn't delete!")}
+      toast.success("category deleted successfully!")
+      setCategoryAdded(categoryAdded+1)}
+    } catch (error) { 
+      toast.error("Catgory didn't delete!")
+    }
   }
   return (
     <div

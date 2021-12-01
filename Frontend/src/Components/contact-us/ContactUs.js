@@ -17,7 +17,7 @@ export const ContactUs = () => {
     const handleSubmit= async (e)=>{
         e.preventDefault();
           console.log(credencials);
-          const response = await axios.post(`https://tal7fy956f.execute-api.eu-south-1.amazonaws.com/dev/messageUpload/${credencials.email}/${credencials.message}`,{})
+          const response = await axios.post(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/upload/${credencials.email}/${credencials.message}`,{})
           console.log(response);
           toast.success(`We will contact you shortly ${credencials.email}`)
         history.push('/') 
