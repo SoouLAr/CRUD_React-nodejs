@@ -1,0 +1,15 @@
+service: tahir-uploadImage
+frameworkVersion: '2'
+provider:
+  name: aws
+  region: eu-south-1
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+functions:
+  app: 
+    handler: app.handler
+    events: 
+      - http: 
+          path: /uploadImage/
+          method: PUT
+          cors: true
