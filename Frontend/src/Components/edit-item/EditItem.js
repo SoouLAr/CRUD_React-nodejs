@@ -19,7 +19,7 @@ export const EditItem = ({ categories }) => {
   const [isUploading, setIsUploading] = useState(false);
   const fetchitem = async () => {
     const { data } = await axios.get(
-      `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/finditembyid/${id}`
+      `https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/items/getitemByID/${id}`
     );
     setItem(data.body);
   };

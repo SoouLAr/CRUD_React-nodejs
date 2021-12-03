@@ -8,8 +8,6 @@ const AmazonCognitoIdentity = require("amazon-cognito-identity-js");
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const AWS = require("aws-sdk");
 
-
-
 const poolData = {
   UserPoolId: process.env.POOL_ID,
   ClientId: process.env.CLIENT_ID,
@@ -17,8 +15,10 @@ const poolData = {
 const s3 = new AWS.S3({
   accessKeyId: process.env.ID,
   secretAccessKey: process.env.SECRET,
-  region:"eu-south-1"
+  region: "eu-south-1",
 });
+
+const userPool = new CognitoUserPool(poolData);
 
 const getAllItems = async () => {
   try {
@@ -337,8 +337,6 @@ const updateItem = async (event) => {
 
 let signUp = async (input) => {
   return new Promise((resolve, reject) => {
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
     let userAttributes = [];
 
     userAttributes.push(
@@ -390,8 +388,6 @@ const addUser = async (event) => {
 
 const confirmCodePromise = async (input) => {
   return new Promise((resolve, reject) => {
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
     const userData = {
       Username: input.username,
       Pool: userPool,
@@ -462,8 +458,6 @@ const messageUpload = async (event) => {
 
 const loginPromise = async (input) => {
   return new Promise((resolve, reject) => {
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
     const authenticationDetails =
       new AmazonCognitoIdentity.AuthenticationDetails({
         Username: input.username,
@@ -519,8 +513,6 @@ const login = async (event) => {
 
 const codeResendPool = async (input) => {
   return new Promise((resolve, reject) => {
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
     const userData = {
       Username: input.username,
       Pool: userPool,
@@ -561,54 +553,55 @@ const resendCode = async (event) => {
   }
 };
 
-const getUploadUrl = async event => {
+const getUploadUrl = async (event) => {
   const bucketParams = {
     Bucket: process.env.BUCKET_NAME,
-    Key: Date.now()+"."+event.pathParameters.extentions,
-    Expires:60
+    Key: Date.now() + "." + event.pathParameters.extentions,
+    Expires: 60,
   };
-  const uploadUrl = await s3.getSignedUrlPromise('putObject',bucketParams)
-  return({
-    statusCode:201,
+  const uploadUrl = await s3.getSignedUrlPromise("putObject", bucketParams);
+  return {
+    statusCode: 201,
     headers: {
-      "Access-Control-Allow-Headers" : "Content-Type",
+      "Access-Control-Allow-Headers": "Content-Type",
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-  },
-    body:JSON.stringify({link:uploadUrl})
-  })
-}
-const uploadImage = async event => {
-  const key = event.queryStringParameters.path
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+    },
+    body: JSON.stringify({ link: uploadUrl }),
+  };
+};
+const uploadImage = async (event) => {
+  const key = event.queryStringParameters.path;
   const params = {
     Bucket: process.env.BUCKET_NAME,
     Key: key,
     ContentType: "multipart/form-data",
-    ACL:"public-read",
-    Expires: 120
+    ACL: "public-read",
+    Expires: 120,
   };
   try {
-    const preSigned = await s3.getSignedUrl("putObject",params)
-    let returnObject={
-      statusCode:201,
-      header:{
-        "acces-control-allow-origin":"*"
+    const preSigned = await s3.getSignedUrl("putObject", params);
+    let returnObject = {
+      statusCode: 201,
+      header: {
+        "acces-control-allow-origin": "*",
       },
-      Body:JSON.stringify({
-        fileUploadURL: preSigned
-      })
-    }
-    return returnObject
+      Body: JSON.stringify({
+        fileUploadURL: preSigned,
+      }),
+    };
+    return returnObject;
   } catch (error) {
-    return({
-      err:error.message,
-      header:{
-        "acces-control-allow-origin":"*"
+    return {
+      err: error.message,
+      header: {
+        "acces-control-allow-origin": "*",
       },
-      body:JSON.stringify({error:err})
-    })
+      body: JSON.stringify({ error: err }),
+    };
   }
-}
+};
+
 
 module.exports = {
   getAllItems,
@@ -626,5 +619,5 @@ module.exports = {
   login,
   resendCode,
   getUploadUrl,
-  uploadImage,
+  uploadImage
 };
