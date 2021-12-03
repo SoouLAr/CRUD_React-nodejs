@@ -1,4 +1,4 @@
-service: tahirTest2
+service: tahir
 frameworkVersion: "2"
 provider:
   name: aws
