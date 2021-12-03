@@ -29,12 +29,14 @@ export const ModalLogIn = ({ modalIsOpen,closeModal,setLoginSignUp}) => {
   const login = async (e)=>{
     e.preventDefault();
     try {
-        const response = await axios.get(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/login?username=${user.username}&password=${user.password}`)
+        const response = await axios.get(`https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/user/login?username=${user.username}&password=${user.password}`)
         localStorage.setItem('accesToken',response.data.message.accessToken)
         localStorage.setItem('idToken',response.data.message.idToken)
         localStorage.setItem('refreshToken',response.data.message.refreshToken)
+        console.log(response);
         response.status===201 && closeModal();
     } catch (error) {
+      console.log(error);
         toast.error("Wrong password try again")
     } 
 }

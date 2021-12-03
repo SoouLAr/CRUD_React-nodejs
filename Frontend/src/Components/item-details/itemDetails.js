@@ -12,7 +12,7 @@ export const ItemDetails = ({ item }) => {
     try {
       setIsUploading(true);
     const data = await axios.delete(
-      `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/deleteitem/${item._id}`,{headers:{"Authorization":localStorage.getItem('idToken')}}
+      `https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/items/deleteItem/${item._id}`,{headers:{"Authorization":localStorage.getItem('idToken')}}
     );
     if (data.status === 200) {
       setIsUploading(false);

@@ -13,7 +13,7 @@ export const CategoryComponent = ({ item,setDidCategoryChange,setCategoryAdded,c
   const handleDelete = async (id)=>{
     try {
       setIsDeleted(true)
-    const {status} = await axios.delete(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/category/deletecategory/${id}`,{headers:{"Authorization":localStorage.getItem('idToken')}})
+    const {status} = await axios.delete(`https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/category/deleteCategory/${id}`,{headers:{"Authorization":localStorage.getItem('idToken')}})
     if (status===200){
       setIsDeleted(false)
       toast.success("category deleted successfully!")

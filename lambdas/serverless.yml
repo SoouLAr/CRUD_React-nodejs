@@ -1,15 +1,135 @@
-service: tahir-login
-frameworkVersion: '2'
+service: tahirTest2
+frameworkVersion: "2"
 provider:
   name: aws
   region: eu-south-1
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
 functions:
-  app: 
-    handler: app.handler
-    events: 
-      - http: 
-          path: /login
+  getAllItems:
+    handler: app.getAllItems
+    events:
+      - http:
+          path: /items/getAllItems
           method: GET
+          cors: true
+  getAllCategories:
+    handler: app.getAllCategories
+    events:
+      - http:
+          path: /category/getAllCategories
+          method: GET
+          cors: true
+  deletItem:
+    handler: app.deleteItem
+    events:
+      - http:
+          path: /items/deleteItem/{id}
+          method: DELETE
+          cors: true
+          authorizer:
+            name: Authorizer
+            arn: arn:aws:cognito-idp:eu-west-3:875637363269:userpool/eu-west-3_0agZKWCf4
+  deleteCategory:
+    handler: app.deleteCategory
+    events:
+      - http:
+          path: /category/deleteCategory/{id}
+          method: DELETE
+          cors: true
+          authorizer:
+            name: Authorizer
+            arn: arn:aws:cognito-idp:eu-west-3:875637363269:userpool/eu-west-3_0agZKWCf4
+  getItemsByCategory:
+    handler: app.getItemsByCategory
+    events:
+      - http:
+          path: /items/getItemsByCategory/{id}
+          method: GET
+          cors: true
+  addItem:
+    handler: app.addItem
+    events:
+      - http:
+          path: /items/addItem/{name}/{price}/{unit}/{category}/
+          method: POST
+          cors: true
+          authorizer:
+            name: Authorizer
+            arn: arn:aws:cognito-idp:eu-west-3:875637363269:userpool/eu-west-3_0agZKWCf4
+  addCategory:
+    handler: app.addCategory
+    events:
+      - http:
+          path: /category/addCategory/{name}
+          method: POST
+          cors: true
+          authorizer:
+            name: Authorizer
+            arn: arn:aws:cognito-idp:eu-west-3:875637363269:userpool/eu-west-3_0agZKWCf4
+  findItemById:
+    handler: app.findItemById
+    events:
+      - http:
+          path: /items/getitemByID/{id}
+          method: GET
+          cors: true
+  updateItem:
+    handler: app.updateItem
+    events:
+      - http:
+          path: /items/updateItems/{id}/{name}/{price}/{unit}/{category}
+          method: PATCH
+          cors: true
+          authorizer:
+            name: Authorizer
+            arn: arn:aws:cognito-idp:eu-west-3:875637363269:userpool/eu-west-3_0agZKWCf4
+  addUser:
+    handler: app.addUser
+    events:
+      - http:
+          path: /user/addUser
+          method: GET
+          cors: true
+  confirmCode:
+    handler: app.confirmCode
+    events:
+      - http:
+          path: /user/confirmCode
+          method: GET
+          cors: true
+  messageUpload:
+    handler: app.messageUpload
+    events:
+      - http:
+          path: /user/messageUpload/{email}/{message}
+          method: POST
+          cors: true
+  login:
+    handler: app.login
+    events:
+      - http:
+          path: /user/login
+          method: GET
+          cors: true
+  resendCode:
+    handler: app.resendCode
+    events:
+      - http:
+          path: /user/resendCode
+          method: GET
+          cors: true
+  getUploadUrl:
+    handler: app.getUploadUrl
+    events:
+      - http:
+          path: /upload/getUploadUrl/{extentions}
+          method: GET
+          cors: true
+  uploadImage:
+    handler: app.uploadImage
+    events:
+      - http:
+          path: /upload/uploadImage
+          method: PUT
           cors: true

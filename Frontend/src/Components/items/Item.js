@@ -6,7 +6,7 @@ export const Item = ({ ItemComponent , isItemAdded}) => {
   const [items, setItems] = useState([]);
   const fetchItems = async () => {
     const { data } = await axios.get(
-      "https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items"
+      "https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/items/getAllItems"
     );
     setItems(data.items);
   };

@@ -86,7 +86,7 @@ export const EditItem = ({ categories }) => {
       ) {
         setIsUploading(true);
         const itemUpdated = await axios.patch(
-          `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/items/updateitem/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`,
+          `https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/items/updateItems/${id}/${item.name}/${item.price}/${item.unit}/${item.category}`,
           null,
           {headers:{"Authorization":localStorage.getItem('idToken')}}
         );

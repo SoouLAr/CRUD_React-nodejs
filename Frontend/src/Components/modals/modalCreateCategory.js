@@ -46,7 +46,7 @@ export const ModalCategory = ({
     if (e.target.files[0].type.startsWith("image/")) {
       setCategory({ ...category, image: e.target.files[0] });
       const { data } = await axios.get(
-        `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/upload/getuploadurl/${
+        `https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/upload/getUploadUrl/${
           e.target.files[0].name.split(".")[1]
         }`
       );
@@ -68,7 +68,7 @@ export const ModalCategory = ({
         },
       });
       try {
-        const data = await axios.post(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/category/${category.names}?url=${postUrl.split("?")[0]}`,null,{headers:{"Authorization":localStorage.getItem('idToken')}});
+        const data = await axios.post(`https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/category/addCategory/${category.names}?url=${postUrl.split("?")[0]}`,null,{headers:{"Authorization":localStorage.getItem('idToken')}});
         if (data.status === 201) {
           setIsUploading(false)
           setCategory(initialState);

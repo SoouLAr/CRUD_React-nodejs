@@ -68,7 +68,7 @@ export const ModalLoginSignUp = ({
     e.preventDefault()
     try {
       const response = await axios.get(
-        `https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/adduser?username=${newUser.username}&email=${newUser.email}&password=${newUser.password}`
+        `https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/user/addUser?username=${newUser.username}&email=${newUser.email}&password=${newUser.password}`
       );
       if (response.status === 201) {
         setIsSigninUp(false)
@@ -80,7 +80,7 @@ export const ModalLoginSignUp = ({
 
   const approveCode = async ()=>{
     try {
-      const response = await axios.get(`https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/confirmcode?username=${newUser.username}&code=${code}`)
+      const response = await axios.get(`https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/user/confirmCode?username=${newUser.username}&code=${code}`)
     if(response.status===201){
       toast.success("Verified.Now login!")
       closeModal()
@@ -94,7 +94,7 @@ export const ModalLoginSignUp = ({
 
   const sendCode = async()=>{
     try {
-      const response = await axios.get(` https://fvlqu9sace.execute-api.eu-south-1.amazonaws.com/dev/cognito/resendconfirmationcode/?username=${newUser.username}`)
+      const response = await axios.get(`https://whror49dn5.execute-api.eu-south-1.amazonaws.com/dev/user/resendCode?username=${newUser.username}`)
       if(response.status===200) toast.success('Check your email')
       setIsSigninUp(false)
     } catch (error) {
